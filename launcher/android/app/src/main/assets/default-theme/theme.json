@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "theme_id": "padrao-biblico",
+  "display_name": "Launcher Temático",
+  "colors": { "background": "#FFF6E0", "text": "#3B2A1A", "accent": "#E8A317" },
+  "background_image": "fundo.png",
+  "logo_image": "logo.png",
+  "message": "Deus te abençoe!",
+  "icon_frame": {
+    "image": "frame-biblia.png",
+    "icon_slot": { "x": 0.18, "y": 0.20, "w": 0.64, "h": 0.42 },
+    "label_slot": { "x": 0.12, "y": 0.70, "w": 0.76, "h": 0.14 }
+  },
+  "verses": [
+    { "reference": "Mt 19:14", "text": "Texto provisório: Jesus chama as crianças para perto dele.", "version": "PROV" },
+    { "reference": "Jo 3:16", "text": "Texto provisório: Deus amou tanto o mundo que deu o seu Filho.", "version": "PROV" },
+    { "reference": "Sl 23:1", "text": "Texto provisório: o Senhor é o meu pastor e cuida de mim.", "version": "PROV" },
+    { "reference": "Ef 6:1", "text": "Texto provisório: filhos, obedeçam aos seus pais no Senhor.", "version": "PROV" },
+    { "reference": "Pv 3:5", "text": "Texto provisório: confie no Senhor de todo o coração.", "version": "PROV" },
+    { "reference": "1Jo 4:19", "text": "Texto provisório: nós amamos porque ele nos amou primeiro.", "version": "PROV" },
+    { "reference": "Sl 118:24", "text": "Texto provisório: este é o dia que o Senhor fez; vamos nos alegrar.", "version": "PROV" }
+  ],
+  "verses_attribution": "Texto provisório, substituir por tradução licenciada"
+}

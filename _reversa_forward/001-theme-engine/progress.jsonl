@@ -1,0 +1,30 @@
+{"ts": "2026-10-30T00:57:32Z", "action": "T001", "status": "done", "files": ["launcher/android/settings.gradle.kts", "launcher/android/build.gradle.kts", "launcher/android/gradle.properties", "launcher/android/gradle/libs.versions.toml"]}
+{"ts": "2026-10-30T00:57:32Z", "action": "T002", "status": "done", "files": ["launcher/.gitignore"]}
+{"ts": "2026-10-30T00:57:32Z", "action": "T003", "status": "done", "files": ["launcher/android/theme-core/build.gradle.kts"]}
+{"ts": "2026-10-30T00:57:32Z", "action": "T004", "status": "done", "files": ["launcher/android/app/build.gradle.kts"]}
+{"ts": "2026-10-30T00:57:33Z", "action": "T005", "status": "done", "files": ["launcher/android/app/src/main/AndroidManifest.xml", "launcher/android/app/src/main/java/br/tematv/launcher/TemaTvApplication.kt"]}
+{"ts": "2026-10-30T01:00:00Z", "action": "T006", "status": "done", "files": ["launcher/android/tools/make_placeholder_art.py"]}
+{"ts": "2026-10-30T01:00:00Z", "action": "T007", "status": "done", "files": ["launcher/android/app/src/main/assets/default-theme/frame-biblia.png", "launcher/android/app/src/main/assets/default-theme/logo.png", "launcher/android/app/src/main/assets/default-theme/fundo.png", "launcher/android/sample-themes/biblia-exemplo", "launcher/android/sample-themes/hamburguer-exemplo"]}
+{"ts": "2026-10-30T01:00:00Z", "action": "T008", "status": "done", "files": ["launcher/android/app/src/main/assets/default-theme/theme.json", "launcher/android/sample-themes/biblia-exemplo/theme.json", "launcher/android/sample-themes/hamburguer-exemplo/theme.json"]}
+{"ts": "2026-10-30T01:05:20Z", "action": "T009", "status": "done", "files": ["launcher/android/theme-core/src/test/kotlin/br/tematv/themecore/TestPackages.kt"]}
+{"ts": "2026-10-30T01:05:20Z", "action": "T010", "status": "done", "files": ["launcher/android/theme-core/src/test/kotlin/br/tematv/themecore/SafeZipExtractorTest.kt"]}
+{"ts": "2026-10-30T01:05:20Z", "action": "T011", "status": "done", "files": ["launcher/android/theme-core/src/test/kotlin/br/tematv/themecore/ThemeValidatorTest.kt"]}
+{"ts": "2026-10-30T01:05:21Z", "action": "T012", "status": "done", "files": ["launcher/android/theme-core/src/test/kotlin/br/tematv/themecore/ThemePackageLoaderTest.kt"]}
+{"ts": "2026-10-30T01:05:21Z", "action": "T013", "status": "done", "files": ["launcher/android/theme-core/src/main/kotlin/br/tematv/themecore/ThemeManifest.kt", "launcher/android/theme-core/src/main/kotlin/br/tematv/themecore/ManifestParser.kt"]}
+{"ts": "2026-10-30T01:05:21Z", "action": "T014", "status": "done", "files": ["launcher/android/theme-core/src/main/kotlin/br/tematv/themecore/SafeZipExtractor.kt"]}
+{"ts": "2026-10-30T01:05:21Z", "action": "T015", "status": "done", "files": ["launcher/android/theme-core/src/main/kotlin/br/tematv/themecore/ImageHeaderReader.kt"]}
+{"ts": "2026-10-30T01:05:21Z", "action": "T016", "status": "done", "files": ["launcher/android/theme-core/src/main/kotlin/br/tematv/themecore/ThemeValidator.kt"]}
+{"ts": "2026-10-30T01:05:21Z", "action": "T017", "status": "done", "files": ["launcher/android/theme-core/src/main/kotlin/br/tematv/themecore/ThemePackageLoader.kt"]}
+{"ts": "2026-10-30T01:05:36Z", "action": "T018", "status": "blocked", "files": ["launcher/android/theme-core/"]}
+{"ts": "2026-10-30T01:07:45Z", "action": "T019", "status": "done", "files": ["launcher/android/app/src/main/java/br/tematv/launcher/theme/ThemeStorage.kt"]}
+{"ts": "2026-10-30T01:07:45Z", "action": "T020", "status": "done", "files": ["launcher/android/app/src/main/java/br/tematv/launcher/theme/ThemeStateStore.kt"]}
+{"ts": "2026-10-30T01:07:45Z", "action": "T021", "status": "done", "files": ["launcher/android/app/src/main/java/br/tematv/launcher/theme/ThemeImageLoader.kt"]}
+{"ts": "2026-10-30T01:07:45Z", "action": "T022", "status": "done", "files": ["launcher/android/app/src/main/java/br/tematv/launcher/theme/DefaultThemeProvider.kt"]}
+{"ts": "2026-10-30T01:07:46Z", "action": "T023", "status": "done", "files": ["launcher/android/app/src/main/java/br/tematv/launcher/theme/ThemeRepository.kt", "launcher/android/app/src/main/java/br/tematv/launcher/theme/AndroidThemeLogger.kt"]}
+{"ts": "2026-10-30T01:07:46Z", "action": "T024", "status": "done", "files": ["launcher/android/app/src/main/java/br/tematv/launcher/theme/ReloadThemeReceiver.kt", "launcher/android/app/src/main/AndroidManifest.xml"]}
+{"ts": "2026-10-30T01:07:46Z", "action": "T025", "status": "done", "files": ["launcher/android/app/src/test/java/br/tematv/launcher/theme/ThemeRepositoryTest.kt"]}
+{"ts": "2026-10-30T01:07:46Z", "action": "T026", "status": "done", "files": ["launcher/android/app/build.gradle.kts"]}
+{"ts": "2026-10-30T01:07:46Z", "action": "T027", "status": "done", "files": ["launcher/android/theme-core/src/test/kotlin/br/tematv/themecore/BundledThemesTest.kt"]}
+{"ts": "2026-10-30T01:08:20Z", "action": "T028", "status": "done", "files": ["launcher/android/README.md", "_reversa_forward/001-theme-engine/onboarding.md", "_reversa_forward/001-theme-engine/interfaces/broadcast-reload-theme.md", "_reversa_forward/001-theme-engine/data-delta.md"]}
+{"ts": "2026-10-30T01:08:20Z", "action": "T029", "status": "blocked", "files": ["launcher/android/"]}
+{"ts": "2026-10-30T01:08:20Z", "action": "T030", "status": "blocked", "files": ["launcher/android/app/build/outputs/apk/debug/app-debug.apk"]}

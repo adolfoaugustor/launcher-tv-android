@@ -1,0 +1,15 @@
+{
+  "schema-version": 1,
+  "feature-dir": "_reversa_forward/001-theme-engine",
+  "feature-id": "001",
+  "short-name": "theme-engine",
+  "started-at": "2026-10-29T21:16:48-03:00",
+  "current-stage": "coding",
+  "stages-completed": [
+    "requirements",
+    "clarify",
+    "plan",
+    "to-do"
+  ],
+  "paused-features": []
+}

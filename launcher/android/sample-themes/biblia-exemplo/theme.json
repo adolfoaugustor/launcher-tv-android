@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "theme_id": "biblia-exemplo",
+  "display_name": "Igreja Exemplo",
+  "colors": { "background": "#FFF6E0", "text": "#3B2A1A", "accent": "#1E88E5" },
+  "background_image": "fundo.png",
+  "logo_image": "logo.png",
+  "message": "Bem-vindo à Igreja Exemplo! Aqui a família aprende a Palavra de Deus.",
+  "icon_frame": {
+    "image": "frame-biblia.png",
+    "icon_slot": { "x": 0.18, "y": 0.20, "w": 0.64, "h": 0.42 },
+    "label_slot": { "x": 0.12, "y": 0.70, "w": 0.76, "h": 0.14 }
+  },
+  "verses": [
+    { "reference": "Mt 19:14", "text": "Texto provisório: Jesus chama as crianças para perto dele.", "version": "PROV" },
+    { "reference": "Sl 23:1", "text": "Texto provisório: o Senhor é o meu pastor e cuida de mim.", "version": "PROV" },
+    { "reference": "Pv 3:5", "text": "Texto provisório: confie no Senhor de todo o coração.", "version": "PROV" }
+  ],
+  "verses_attribution": "Texto provisório, substituir por tradução licenciada"
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "theme_id": "hamburguer-exemplo",
+  "display_name": "Hamburgueria Exemplo",
+  "colors": { "background": "#FFE8CC", "text": "#4A1E00", "accent": "#D62828" },
+  "background_image": "fundo.png",
+  "logo_image": "logo.png",
+  "message": "Peça o combo da casa no balcão!",
+  "icon_frame": {
+    "image": "frame-hamburguer.png",
+    "icon_slot": { "x": 0.15, "y": 0.30, "w": 0.70, "h": 0.32 },
+    "label_slot": { "x": 0.14, "y": 0.70, "w": 0.72, "h": 0.13 }
+  },
+  "verses": [
+    { "reference": "Promo 1", "text": "Texto de exemplo: terça-feira é dia de batata grátis.", "version": "LOJA" }
+  ],
+  "verses_attribution": "Mensagens da loja"
+}
