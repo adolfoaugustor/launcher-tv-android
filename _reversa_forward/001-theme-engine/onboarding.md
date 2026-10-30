@@ -31,7 +31,7 @@
 
 ```bash
 cd launcher/android
-~/gradle/gradle-8.7/bin/gradle wrapper --gradle-version 8.7   # só na primeira vez
+echo "sdk.dir=$HOME/Android/Sdk" > local.properties   # só na primeira vez; o wrapper 8.7 já está no projeto
 ./gradlew :theme-core:test :app:testDebugUnitTest
 ./gradlew :app:assembleDebug :app:packSampleThemes
 ```
@@ -64,10 +64,12 @@ adb logcat -d -s TemaTV
 
 Aplicar o pacote de exemplo:
 
+O ADB não tem permissão para gravar na pasta do app; os arquivos entram pela importação do ADB (`interfaces/importacao-adb.md`):
+
 ```bash
-T=/sdcard/Android/data/br.tematv.launcher/files/themes
-adb push app/build/sample-themes/biblia-exemplo.tematv $T/
-adb shell "echo biblia-exemplo.tematv > $T/active_theme.txt"
+I=content://br.tematv.launcher.themes
+adb shell "content write --uri $I/biblia-exemplo.tematv" < app/build/sample-themes/biblia-exemplo.tematv
+echo biblia-exemplo.tematv | adb shell "content write --uri $I/active_theme.txt"
 adb shell am broadcast -f 32 -a br.tematv.launcher.action.RELOAD_THEME -n br.tematv.launcher/.theme.ReloadThemeReceiver
 adb logcat -d -s TemaTV | tail -5
 ```
@@ -77,7 +79,8 @@ Esperado: `Tema aplicado: biblia-exemplo`.
 Testar a recusa de pacote inválido (mantém o último tema válido):
 
 ```bash
-adb shell "echo lixo > $T/quebrado.tematv && echo quebrado.tematv > $T/active_theme.txt"
+echo lixo | adb shell "content write --uri $I/quebrado.tematv"
+echo quebrado.tematv | adb shell "content write --uri $I/active_theme.txt"
 adb shell am broadcast -f 32 -a br.tematv.launcher.action.RELOAD_THEME -n br.tematv.launcher/.theme.ReloadThemeReceiver
 adb logcat -d -s TemaTV | tail -3
 ```
@@ -87,7 +90,7 @@ Esperado: `Pacote recusado: THEME_ARCHIVE_CORRUPT (quebrado.tematv) ...` seguido
 Testar pacote ativo inexistente (usa o tema padrão):
 
 ```bash
-adb shell "echo apagado.tematv > $T/active_theme.txt"
+echo apagado.tematv | adb shell "content write --uri $I/active_theme.txt"
 adb shell am broadcast -f 32 -a br.tematv.launcher.action.RELOAD_THEME -n br.tematv.launcher/.theme.ReloadThemeReceiver
 adb logcat -d -s TemaTV | tail -3
 ```

@@ -4,12 +4,13 @@
   "feature-id": "001",
   "short-name": "theme-engine",
   "started-at": "2026-10-29T21:16:48-03:00",
-  "current-stage": "coding",
+  "current-stage": "done",
   "stages-completed": [
     "requirements",
     "clarify",
     "plan",
-    "to-do"
+    "to-do",
+    "coding"
   ],
   "paused-features": []
 }

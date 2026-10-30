@@ -10,7 +10,7 @@
 
 | Métrica | Valor |
 |---------|-------|
-| Total de ações | 30 |
+| Total de ações | 33 |
 | Paralelizáveis (`[//]`) | 9 |
 | Maior cadeia de dependência | 12 (T001 → T003 → T013 → T015 → T016 → T017 → T019 → T022 → T023 → T024 → T029 → T030) |
 
@@ -45,7 +45,7 @@
 | T015 | Implementar `ImageHeaderReader`: reconhece PNG, JPEG e WEBP pela assinatura e lê largura e altura do cabeçalho (D-06) | T013 | `[//]` | `launcher/android/theme-core/src/main/kotlin/br/tematv/themecore/ImageHeaderReader.kt` | 🟢 | `[X]` |
 | T016 | Implementar `ThemeValidator` sobre uma pasta descompactada: regras de campo, existência e tipo de arquivos, proporção da moldura (RF-02, RF-03, RF-12) | T013, T015 | - | `launcher/android/theme-core/src/main/kotlin/br/tematv/themecore/ThemeValidator.kt` | 🟢 | `[X]` |
 | T017 | Implementar `ThemePackageLoader`: confere tamanho, extrai, lê o JSON, valida e devolve `ValidatedTheme` com caminhos resolvidos ou `ThemeError` | T014, T016 | - | `launcher/android/theme-core/src/main/kotlin/br/tematv/themecore/ThemePackageLoader.kt` | 🟢 | `[X]` |
-| T018 | Rodar `./gradlew :theme-core:test` e corrigir o núcleo até todos os testes das ações T010 a T012 passarem | T010, T011, T012, T017 | - | `launcher/android/theme-core/` | 🟢 | `[ ]` |
+| T018 | Rodar `./gradlew :theme-core:test` e corrigir o núcleo até todos os testes das ações T010 a T012 passarem | T010, T011, T012, T017 | - | `launcher/android/theme-core/` | 🟢 | `[X]` |
 
 ## Fase 4, Integração
 
@@ -66,8 +66,16 @@
 | ID | Descrição | Dependências | Paralelismo | Arquivo alvo | Confidência | Status |
 |----|-----------|--------------|-------------|--------------|-------------|--------|
 | T028 | Escrever o `README.md` do app: o que existe nesta feature, como compilar e testar, link para o `onboarding.md` | - | `[//]` | `launcher/android/README.md` | 🟢 | `[X]` |
-| T029 | Rodar `./gradlew :theme-core:test :app:testDebugUnitTest :app:assembleDebug :app:packSampleThemes` e corrigir até tudo passar | T024, T025, T026, T027 | - | `launcher/android/` | 🟢 | `[ ]` |
-| T030 | Teste na TV de referência (TCL, 192.168.1.2) seguindo o `onboarding.md` §3. **Antes, avisar o usuário para ligar a TV e confirmar que ela responde.** Verificar tema padrão, `biblia-exemplo` aplicado, pacote inválido recusado com `THEME_ARCHIVE_CORRUPT` mantendo `biblia-exemplo`, e pacote ativo inexistente recusado com `THEME_ACTIVE_NOT_FOUND` voltando ao tema padrão | T029 | - | `launcher/android/app/build/outputs/apk/debug/app-debug.apk` | 🟡 | `[ ]` |
+| T029 | Rodar `./gradlew :theme-core:test :app:testDebugUnitTest :app:assembleDebug :app:packSampleThemes` e corrigir até tudo passar | T024, T025, T026, T027 | - | `launcher/android/` | 🟢 | `[X]` |
+| T030 | Teste na TV de referência (TCL, 192.168.1.2) seguindo o `onboarding.md` §3. **Antes, avisar o usuário para ligar a TV e confirmar que ela responde.** Verificar tema padrão, `biblia-exemplo` aplicado, pacote inválido recusado com `THEME_ARCHIVE_CORRUPT` mantendo `biblia-exemplo`, e pacote ativo inexistente recusado com `THEME_ACTIVE_NOT_FOUND` voltando ao tema padrão | T029, T033 | - | `launcher/android/app/build/outputs/apk/debug/app-debug.apk` | 🟡 | `[X]` |
+
+## Fase 6, Emenda: importação pelo ADB (RF-13, D-15)
+
+| ID | Descrição | Dependências | Paralelismo | Arquivo alvo | Confidência | Status |
+|----|-----------|--------------|-------------|--------------|-------------|--------|
+| T031 | Criar `ThemeImportNames` (nomes aceitos na importação) e o teste JVM com nomes válidos, com `/`, com `..`, com maiúsculas e com mais de um segmento | T019 | - | `launcher/android/app/src/main/java/br/tematv/launcher/theme/ThemeImportNames.kt` | 🟢 | `[X]` |
+| T032 | Criar `ThemeImportProvider` (só uid 2000 ou 0, escrita com truncamento, leitura para conferência) e registrá-lo exportado no manifesto com a autoridade `br.tematv.launcher.themes` (contrato `interfaces/importacao-adb.md`) | T031, T005 | - | `launcher/android/app/src/main/java/br/tematv/launcher/theme/ThemeImportProvider.kt` | 🟢 | `[X]` |
+| T033 | Rodar `./gradlew :theme-core:test :app:testDebugUnitTest :app:assembleDebug :app:packSampleThemes` e corrigir até tudo passar | T032 | - | `launcher/android/` | 🟢 | `[X]` |
 
 ## Notas de execução
 
@@ -84,8 +92,21 @@
 - Desvio do plano 2: o broadcast de recarga precisa de `-f 32` (FLAG_INCLUDE_STOPPED_PACKAGES), porque o app recém-instalado fica "parado" (`interfaces/broadcast-reload-theme.md` e `onboarding.md` atualizados).
 - Correção de roteiro: o `onboarding.md` §3 e a T030 diziam que um pacote ativo inexistente mantém o tema anterior; o requisito aprovado (cenário "Tema ativo apagado") e o código usam o tema padrão. O roteiro agora testa os dois casos separadamente.
 
+### Rodada 2 do `/reversa-coding` (2026-10-30)
+
+- Ferramentas instaladas pelo usuário: JDK 17, Android SDK (plataforma 34 em `~/android-sdk`) e Gradle 8.5. O wrapper do projeto foi gerado na versão 8.7 (exigida pelo AGP 8.5) e o `local.properties` aponta o SDK (fora do git).
+- T018: 39 testes do núcleo passaram na primeira execução. T029: build, APK e pacotes de exemplo gerados; 8 testes do app passaram.
+- T030 começou parcial: na TCL (Android 11), o shell do ADB (`uid=2000`, sem o grupo `ext_data_rw`) e o `run-as` não gravam em `Android/data/br.tematv.launcher/`; `adb push` respondeu `Permission denied`. A premissa do `roadmap.md` §4 era falsa.
+- Decisão do usuário: resolver já na feature 1. Emenda registrada como RF-13 (`requirements.md`), D-15 (`roadmap.md`), contrato `interfaces/importacao-adb.md` e ações T031 a T033 (Fase 6).
+- T033: 50 testes passaram (39 do núcleo e 11 do app).
+- T030 na TV, 9 de 9 verificações: tema padrão; `biblia-exemplo` importado por `content write` e aplicado; pacote corrompido recusado com `THEME_ARCHIVE_CORRUPT` mantendo `biblia-exemplo`; pacote inexistente recusado com `THEME_ACTIVE_NOT_FOUND` voltando ao padrão; nome inválido recusado pela importação; `hamburguer-exemplo` aplicado pelo mesmo APK. Nenhum travamento.
+- Não medido nesta rodada: tempo de aplicação de pacote de 15 MB (RNF de desempenho, Should) e memória do app; ficam para a feature 2, que tem tela.
+- O app `br.tematv.launcher` (build de debug) ficou instalado na TV, sem tela e sem alterar o launcher do Google, com o tema `hamburguer-exemplo` ativo.
+- Para convergir no `/reversa-sync`: `_reversa_sdd/sdd/device-provisioning.md` (RF-07, RF-08 e OQ-01) ainda descreve a cópia direta para `Android/data`; deve passar a usar a importação pelo ADB.
+
 ## Histórico de alterações
 
 | Data | Alteração | Autor |
 |------|-----------|-------|
 | 2026-10-29 | Versão inicial gerada por `/reversa-to-do` | reversa |
+| 2026-10-30 | Fase 6 (T031 a T033) acrescentada: importação pelo ADB | reversa-coding |

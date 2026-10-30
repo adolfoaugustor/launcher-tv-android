@@ -44,8 +44,8 @@ Exemplo de `theme.json`:
 
 Para ativar, o transportador:
 1. Garante que o app já rodou uma vez (cria `files/themes/`).
-2. Copia o `.tematv` para `Android/data/br.tematv.launcher/files/themes/`.
-3. Grava o nome do arquivo (só o nome, sem caminho) em `files/themes/active_theme.txt`.
+2. Envia o `.tematv` pela importação do ADB (`importacao-adb.md`). O `adb push` direto para `Android/data/br.tematv.launcher/files/themes/` não funciona: na TCL (Android 11) o ADB não tem permissão nessa pasta.
+3. Grava o nome do arquivo (só o nome, sem caminho) em `active_theme.txt`, também pela importação do ADB.
 4. Envia o broadcast de recarga (`broadcast-reload-theme.md`) ou espera a próxima abertura do app.
 
 ## Response (o que o consumidor faz)

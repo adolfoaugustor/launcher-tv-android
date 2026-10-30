@@ -4,7 +4,7 @@
 > Data: `2026-10-29`
 > Feature greenfield, sem legado pré-existente. Âncora: `_reversa_sdd/prd.md` + specs SDD (`_reversa_sdd/sdd/theme-engine.md`).
 > Política de edição no momento da execução: `allowLegacyEdits: true`, `allowedPaths: ["launcher/**"]`. Todos os arquivos tocados casam com `launcher/**`.
-> Estado: rodada parcial. Código escrito e revisado por leitura, nada compilado nem testado (T018, T029 e T030 bloqueadas por falta de JDK, Android SDK e Gradle).
+> Estado: concluída em 2026-10-30. 33 de 33 ações; 50 testes automatizados passando; teste na TV de referência com 9 de 9 verificações.
 
 ## Arquivos afetados
 
@@ -35,11 +35,15 @@
 | `launcher/android/sample-themes/*` | Pacotes de exemplo (RF-11) | componente-novo | LOW | Bíblia e hambúrguer |
 | `launcher/android/tools/make_placeholder_art.py` | Arte provisória (D-13) | componente-novo | LOW | Gera os PNGs sem dependências |
 | `launcher/android/README.md` | Documentação | componente-novo | LOW | Como compilar e testar |
+| `launcher/android/gradlew`, `gradlew.bat`, `gradle/wrapper/*` | Projeto Gradle `launcher/android/` | componente-novo | LOW | Gradle wrapper 8.7 |
+| `.../launcher/theme/ThemeImportNames.kt` e `ThemeImportNamesTest.kt` | `:app` (RF-13, D-15) | componente-novo | MEDIUM | Lista fechada de nomes aceitos na importação |
+| `.../launcher/theme/ThemeImportProvider.kt` e `AndroidManifest.xml` | `:app` (RF-13, D-15, contrato `interfaces/importacao-adb.md`) | componente-novo | HIGH | ContentProvider exportado; só aceita o shell do ADB ou root |
 
 ## Diff conceitual por componente
 
 - **Projeto Gradle `launcher/android/`:** nasce a base do app Android TV, com dois módulos e o catálogo de versões. As features 2 a 4 vão acrescentar código ao `:app`.
 - **`:theme-core`:** nasce o formato `.tematv` v1 como contrato de arquivo. O núcleo é Kotlin puro, usa só APIs disponíveis no Android 9 e devolve recusas como `ThemeError(code, field)`, sem exceções soltas.
+- **Importação pelo ADB:** a premissa de gravar direto em `Android/data` caiu na TCL; nasce o `ThemeImportProvider`, que recebe pacotes e o `active_theme.txt` por `content write` e recusa qualquer chamador que não seja o shell ou o root.
 - **`:app`:** nasce o repositório de tema com estado observável (`StateFlow<ActiveTheme?>`), a persistência do último válido e do último erro, o tema padrão embutido e o broadcast de recarga. Não há tela nesta feature.
 
 ## Preservadas

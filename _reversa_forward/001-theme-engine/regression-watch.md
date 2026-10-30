@@ -23,6 +23,7 @@ Nenhum item nesta rodada.
 | W006 | `requirements.md` RF-08 | Inscritos em `activeTheme` recebem o novo tema só após troca bem-sucedida | presença | Aviso de troca após recusa |
 | W007 | `requirements.md` RF-11, RF-12 | O mesmo APK aplica a moldura de Bíblia e a de hambúrguer; a moldura expõe a proporção reduzida (13:17 para 260×340) | presença | Moldura diferente exige mudar o código |
 | W008 | `interfaces/broadcast-reload-theme.md` | `am broadcast -f 32 -a br.tematv.launcher.action.RELOAD_THEME -n br.tematv.launcher/.theme.ReloadThemeReceiver` recarrega o tema | presença | Broadcast ignorado após a instalação |
+| W010 | `requirements.md` RF-13; `interfaces/importacao-adb.md` | `content write --uri content://br.tematv.launcher.themes/<nome>` pelo ADB grava pacotes `<kebab-case>.tematv` e o `active_theme.txt`; outros apps recebem `SecurityException`; nomes fora da lista são recusados | presença | Gravação por outro app, nome com `/` aceito, ou importação pelo ADB falhando |
 | W009 | `SafeZipExtractor.kt` (observação de plataforma) | Em Android 14+ com targetSdk 34, o `ZipFile` da plataforma lança exceção em entradas com `..` antes do extrator; nessas TVs a recusa aparece como `THEME_ARCHIVE_CORRUPT`, não `THEME_ARCHIVE_UNSAFE`. O pacote continua recusado | confidência | Pacote com `..` aplicado em qualquer versão |
 
 ## Histórico de re-extrações

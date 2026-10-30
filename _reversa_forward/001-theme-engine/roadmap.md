@@ -41,6 +41,7 @@ O tema padrão vai embutido em `assets/` do app, validado pelas mesmas regras no
 | D-12 | Pacotes de exemplo gerados pela tarefa Gradle `:app:packSampleThemes` a partir de `launcher/android/sample-themes/<nome>/` | Fonte legível no git, pacote reproduzível | Guardar `.tematv` binário no git | 🟢 |
 | D-13 | Arte provisória (molduras de Bíblia e hambúrguer, logotipo do produto, fundo) gerada por um script Python sem dependências em `launcher/android/tools/make_placeholder_art.py` | Não há ferramenta de imagem instalada; arte final pode substituir os PNGs depois sem mudar código | Esperar arte de designer (bloquearia a feature) | 🟡 |
 | D-14 | Logs com a tag `TemaTV` e registro de recusa com código, campo e data e hora | RNF de observabilidade e RF-09 | Sem log estruturado | 🟢 |
+| D-15 | `ThemeImportProvider` (`ContentProvider` exportado, autoridade `br.tematv.launcher.themes`) recebe pacotes e o `active_theme.txt` por `adb shell 'content write --uri content://br.tematv.launcher.themes/<nome>' < arquivo`; aceita só chamadas do uid 2000 (shell) ou 0 (root) e só nomes `^[a-z0-9-]+\.tematv$` ou `active_theme.txt` (RF-13) | Na TCL, só o próprio app grava em `Android/data/<pacote>/`; `content write` existe no Android 11 da TV e roda com o uid do shell | `adb push` (sem permissão); `run-as` (só build de debug e também sem acesso); permissão de todos os arquivos (`MANAGE_EXTERNAL_STORAGE`, ampla demais); pasta Download pública (o app não lê arquivos que não são mídia sem o seletor do sistema) | 🟢 |
 
 ## 4. Premissas
 
@@ -49,7 +50,7 @@ Não há `[DÚVIDA]` pendente no `requirements.md`. As premissas abaixo vêm de 
 | Premissa | Origem (`requirements.md` seção) | Risco se errada |
 |----------|----------------------------------|-----------------|
 | Android TV 9 (API 28) basta como mínimo para os clientes | §6, Compatibilidade | TVs mais antigas ficam de fora |
-| O ADB consegue gravar em `Android/data/br.tematv.launcher/files/themes/` na TCL (Android 11) | §5, RF-04; `_reversa_sdd/sdd/device-provisioning.md#14-open-questions` (OQ-01) | A feature 6 precisaria de importação alternativa |
+| 🔴 **Falsa (verificada em 2026-10-30):** o ADB consegue gravar em `Android/data/br.tematv.launcher/files/themes/` na TCL (Android 11). Evidência: o shell roda como `uid=2000(shell)` sem o grupo `ext_data_rw`; a pasta é `drwxrws--- u0_a77 ext_data_rw`; `adb push` respondeu `Permission denied`; o `run-as` também foi barrado. Substituída pela D-15 | §5, RF-04; `_reversa_sdd/sdd/device-provisioning.md#14-open-questions` (OQ-01) | Resolvido pela D-15; o RF-07, o RF-08 e o OQ-01 de `device-provisioning.md` precisam convergir no `/reversa-sync` |
 | A arte provisória é aceitável até a arte final | §5, RF-11 | Só estética; não afeta o motor |
 
 ## 5. Delta arquitetural
@@ -75,6 +76,7 @@ Sem `_reversa_sdd/architecture.md` (projeto novo). Os componentes vêm de `_reve
 |----------|------|--------------------|
 | Pacote de tema `.tematv` v1 e pasta de temas | arquivo | `_reversa_forward/001-theme-engine/interfaces/pacote-tematv.md` |
 | Broadcast `br.tematv.launcher.action.RELOAD_THEME` | intent Android | `_reversa_forward/001-theme-engine/interfaces/broadcast-reload-theme.md` |
+| Importação pelo ADB (`content://br.tematv.launcher.themes/<nome>`) | ContentProvider Android | `_reversa_forward/001-theme-engine/interfaces/importacao-adb.md` |
 
 ## 8. Plano de migração
 

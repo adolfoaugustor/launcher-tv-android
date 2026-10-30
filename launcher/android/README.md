@@ -5,7 +5,7 @@ App Android TV que troca a tela inicial da TV por um tema da igreja ou do client
 ## O que existe hoje (feature 001, motor de temas)
 
 - `theme-core/`: núcleo em Kotlin puro. Lê o pacote `.tematv`, descompacta com segurança e valida o `theme.json` v1.
-- `app/`: app `br.tematv.launcher`. Guarda os pacotes na TV, aplica o tema ativo, mantém o último tema válido e recarrega o tema quando recebe o broadcast `br.tematv.launcher.action.RELOAD_THEME`.
+- `app/`: app `br.tematv.launcher`. Guarda os pacotes na TV, aplica o tema ativo, mantém o último tema válido e recarrega o tema quando recebe o broadcast `br.tematv.launcher.action.RELOAD_THEME`. Os pacotes entram pela importação do ADB (`content write --uri content://br.tematv.launcher.themes/<nome>`), porque o ADB não grava direto na pasta do app.
 - `app/src/main/assets/default-theme/`: tema padrão (bíblico, sem igreja, mensagem "Deus te abençoe!").
 - `sample-themes/`: fontes dos pacotes de exemplo (`biblia-exemplo`, `hamburguer-exemplo`).
 - `tools/make_placeholder_art.py`: gera a arte provisória (molduras, logotipo e fundos).
@@ -14,10 +14,9 @@ Ainda não há tela: a tela inicial chega na feature 002.
 
 ## Compilar e testar
 
-Pré-requisitos: JDK 17, Android SDK (plataforma 34) e Gradle 8.7 para gerar o wrapper na primeira vez.
+Pré-requisitos: JDK 17 e Android SDK (plataforma 34). O Gradle 8.7 vem pelo wrapper do projeto; crie `local.properties` com `sdk.dir=<caminho do SDK>`.
 
 ```bash
-gradle wrapper --gradle-version 8.7   # só na primeira vez
 ./gradlew :theme-core:test :app:testDebugUnitTest
 ./gradlew :app:assembleDebug :app:packSampleThemes
 ```

@@ -66,6 +66,7 @@ Não há sistema legado: o projeto é novo. O contexto vem dos artefatos gerados
 | RF-10 | O app deve aceitar uma fonte própria (arquivo TrueType `.ttf` ou OpenType `.otf`) no pacote; sem fonte, usa a do sistema. | Could | Pacote com fonte expõe a fonte; pacote sem fonte expõe "fonte do sistema". | 🟡 |
 | RF-11 | O projeto deve incluir dois pacotes de exemplo válidos que usem o mesmo app: um com a moldura de Bíblia e outro com a moldura de hambúrguer, ambas em retrato com 260×340 px de referência (5 apps por linha na tela 1080p). | Must | Os dois pacotes passam na validação e expõem molduras diferentes, com as áreas `icon_slot` e `label_slot` definidas. | 🟢 |
 | RF-12 | O app deve aceitar molduras de qualquer tamanho em pixels e expor também a proporção da imagem; a grade da feature 2 usa como referência 260×340 px por app, 5 por linha e 2 linhas visíveis em 1080p. | Must | Uma moldura de 520×680 px é aceita e expõe a proporção 13:17. | 🟢 |
+| RF-13 | O app deve permitir gravar pacotes `.tematv` e o `active_theme.txt` na pasta `themes/` a partir da linha de comando do ADB, aceitando só o usuário do ADB (shell) ou root, e só nomes `<kebab-case>.tematv` ou `active_theme.txt`. | Must | `content write` pelo ADB grava o pacote e o tema passa a ser aplicado na recarga; outro app recebe erro de segurança; nome com `/` ou fora do padrão é recusado. | 🟢 |
 
 ## 6. Requisitos Não Funcionais
 
@@ -104,6 +105,22 @@ Cenário: Fonte própria opcional
   Quando o motor de temas aplica o pacote
   Então o tema exposto usa essa fonte
   E um pacote sem font_file expõe a fonte do sistema
+
+Cenário: Importar pacote pelo ADB
+  Dado o app instalado na TV
+  Quando o instalador envia "biblia-exemplo.tematv" com content write pelo ADB
+  E grava "biblia-exemplo.tematv" em active_theme.txt do mesmo jeito
+  Então o pacote fica na pasta themes/ e é aplicado na próxima recarga
+
+Cenário: Importação por quem não é o ADB
+  Dado outro app instalado na TV
+  Quando ele tenta gravar um pacote pela mesma entrada de importação
+  Então recebe erro de segurança e nada é gravado
+
+Cenário: Nome de arquivo inválido na importação
+  Dado o ADB conectado
+  Quando o instalador tenta gravar "../fora.tematv" ou "Igreja X.tematv"
+  Então a gravação é recusada e nada é gravado
 
 Cenário: Pacote sem manifesto
   Dado um ZIP sem theme.json indicado em active_theme.txt
@@ -148,6 +165,7 @@ Cenário: Falha de leitura
 | Item | MoSCoW | Justificativa |
 |------|--------|---------------|
 | RF-01 a RF-08 e RF-12 | Must | Sem eles a feature 2 não tem o que desenhar |
+| RF-13 | Must | Sem ele não há como pôr um tema na TV pelo ADB (a TCL não deixa o ADB gravar na pasta do app) |
 | RF-11 | Must | Prova o objetivo central: mesmo app, visuais diferentes |
 | RF-09 | Should | Necessário para a tela de diagnóstico da feature 2, não bloqueia o motor |
 | RF-10 | Could | A fonte do sistema atende o MVP |
@@ -177,3 +195,4 @@ Cenário: Falha de leitura
 |------|-----------|-------|
 | 2026-10-29 | Versão inicial gerada por `/reversa-requirements` | reversa |
 | 2026-10-29 | Sessão de esclarecimentos: tema padrão, tamanho da moldura, mensagem e segundo exemplo | reversa-clarify |
+| 2026-10-30 | RF-13 (importação pelo ADB) e três cenários: no teste na TCL, o ADB e o `run-as` não têm permissão de gravar em `Android/data/br.tematv.launcher/`. Decisão do usuário: resolver já na feature 1 | reversa-coding |

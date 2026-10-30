@@ -21,6 +21,11 @@
             </intent-filter>
         </receiver>
 
+        <provider
+            android:name=".theme.ThemeImportProvider"
+            android:authorities="br.tematv.launcher.themes"
+            android:exported="true" />
+
     </application>
 
 </manifest>

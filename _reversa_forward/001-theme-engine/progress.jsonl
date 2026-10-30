@@ -28,3 +28,10 @@
 {"ts": "2026-10-30T01:08:20Z", "action": "T028", "status": "done", "files": ["launcher/android/README.md", "_reversa_forward/001-theme-engine/onboarding.md", "_reversa_forward/001-theme-engine/interfaces/broadcast-reload-theme.md", "_reversa_forward/001-theme-engine/data-delta.md"]}
 {"ts": "2026-10-30T01:08:20Z", "action": "T029", "status": "blocked", "files": ["launcher/android/"]}
 {"ts": "2026-10-30T01:08:20Z", "action": "T030", "status": "blocked", "files": ["launcher/android/app/build/outputs/apk/debug/app-debug.apk"]}
+{"ts": "2026-10-30T02:44:00Z", "action": "T018", "status": "done", "files": ["launcher/android/gradlew", "launcher/android/gradle/wrapper/gradle-wrapper.properties"]}
+{"ts": "2026-10-30T02:46:01Z", "action": "T029", "status": "done", "files": ["launcher/android/app/build/outputs/apk/debug/app-debug.apk", "launcher/android/app/build/sample-themes/"]}
+{"ts": "2026-10-30T09:59:09Z", "action": "T030", "status": "partial", "files": ["tema padrão verificado na TV; aplicação de pacote bloqueada: shell e run-as sem acesso a Android/data na TCL Android 11"]}
+{"ts": "2026-10-30T10:05:27Z", "action": "T031", "status": "done", "files": ["launcher/android/app/src/main/java/br/tematv/launcher/theme/ThemeImportNames.kt", "launcher/android/app/src/test/java/br/tematv/launcher/theme/ThemeImportNamesTest.kt"]}
+{"ts": "2026-10-30T10:05:27Z", "action": "T032", "status": "done", "files": ["launcher/android/app/src/main/java/br/tematv/launcher/theme/ThemeImportProvider.kt", "launcher/android/app/src/main/AndroidManifest.xml"]}
+{"ts": "2026-10-30T10:07:39Z", "action": "T033", "status": "done", "files": ["launcher/android/app/build/outputs/apk/debug/app-debug.apk"]}
+{"ts": "2026-10-30T10:09:06Z", "action": "T030", "status": "done", "files": ["TCL 192.168.1.2: padrão, biblia-exemplo importado e aplicado, corrompido mantém anterior, inexistente volta ao padrão, nome inválido recusado, hambúrguer aplicado"]}
