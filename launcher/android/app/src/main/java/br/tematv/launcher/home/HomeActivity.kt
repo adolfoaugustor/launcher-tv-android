@@ -31,6 +31,7 @@ import br.tematv.launcher.R
 import br.tematv.launcher.TemaTvApplication
 import br.tematv.launcher.theme.ActiveTheme
 import br.tematv.launcher.theme.ThemeImageLoader
+import br.tematv.launcher.activation.ActivationInputWatcher
 import br.tematv.launcher.activation.ActivationResult
 import br.tematv.launcher.takeover.AccessibilityServiceState
 import br.tematv.launcher.takeover.HomeTakeoverService
@@ -106,6 +107,7 @@ class HomeActivity : ComponentActivity() {
         activationStatusText = findViewById(R.id.activationStatusText)
 
         activateButton.setOnClickListener { submitActivationCode() }
+        activationCodeInput.addTextChangedListener(ActivationInputWatcher())
         activationCodeInput.setOnEditorActionListener { _, actionId, _ ->
             (actionId == EditorInfo.IME_ACTION_DONE).also { if (it) submitActivationCode() }
         }

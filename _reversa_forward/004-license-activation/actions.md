@@ -71,6 +71,12 @@
 - A `TakeoverPolicy` deixou de consultar a licença; o teste de licença inválida da feature 003 saiu, porque agora o Home sem ativação abre a tela de ativação (RN-04).
 - T020: por pedido do usuário, a TV só recebeu o `adb install -r`, sem abrir telas. O código do aparelho da TV de teste foi lido pela importação do ADB: `2544-3298-7734`. A senha foi gerada com o `activation-tool` (registrada em `~/tematv/ativacoes.csv`) e entregue ao usuário. Os testes na TV ficam com ele.
 
+## Emendas
+
+| ID | Descrição | Dependências | Paralelismo | Arquivo alvo | Confidência | Status |
+|----|-----------|--------------|-------------|--------------|-------------|--------|
+| E001 | Campo da senha coloca os traços sozinho (`0000-0000-0000`) enquanto a pessoa digita só números; versão 0.6.3 | - | - | `launcher/android/app/src/main/java/br/tematv/launcher/activation/ActivationInputFormat.kt` | 🟢 | `[X]` |
+
 ## Histórico de alterações
 
 | Data | Alteração | Autor |

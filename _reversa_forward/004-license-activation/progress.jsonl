@@ -18,3 +18,4 @@
 {"ts": "2026-10-30T17:33:18Z", "action": "T018", "status": "done", "files": ["launcher/android/app/build/outputs/apk/debug/app-debug.apk"]}
 {"ts": "2026-10-30T17:33:34Z", "action": "T019", "status": "done", "files": ["launcher/android/README.md"]}
 {"ts": "2026-10-30T17:35:41Z", "action": "T020", "status": "done", "files": ["APK instalado sem mexer no app em execução; código 2544-3298-7734 lido pela importação; senha entregue ao usuário"]}
+{"ts": "2026-10-30T22:29:24Z", "action": "E001", "status": "done", "files": ["launcher/android/app/src/main/java/br/tematv/launcher/activation/ActivationInputFormat.kt", "launcher/android/app/src/test/java/br/tematv/launcher/activation/ActivationInputFormatTest.kt", "launcher/android/app/src/main/java/br/tematv/launcher/home/HomeActivity.kt"]}

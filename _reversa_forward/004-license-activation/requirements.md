@@ -158,3 +158,11 @@ Cenário: Segredo já existe
 |------|-----------|-------|
 | 2026-10-30 | Versão inicial gerada por `/reversa-requirements` | reversa |
 | 2026-10-30 | Sessão de esclarecimentos: ativação perpétua por senha de 12 números digitada na TV, gerada no notebook; sem arquivo de licença assinado | reversa-clarify |
+
+## Emendas
+
+### E001, 2026-10-30
+
+O que muda: o campo da senha no painel de ativação coloca os traços sozinho enquanto a pessoa digita só números no teclado numérico, mostrando a senha no formato `0000-0000-0000`, igual ao jeito que ela é ditada; continua aceitando no máximo 12 números.
+Motivo: o teclado numérico da TV não tem traço e o usuário pediu que o campo ficasse no mesmo formato da senha.
+Arquivos previstos: `launcher/android/app/src/main/java/br/tematv/launcher/activation/ActivationInputFormat.kt` (novo), `home/HomeActivity.kt`, `res/layout/activity_home.xml` e o teste do formato.

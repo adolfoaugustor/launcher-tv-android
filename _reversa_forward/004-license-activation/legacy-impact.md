@@ -21,6 +21,8 @@
 | `.../home/HomeActivity.kt`, `res/layout/activity_home.xml`, `res/values/colors.xml` | `:app` (feature 002) | regra-alterada | MEDIUM | Painel de ativação no lugar da grade |
 | `.../home/ThemeOptionsActivity.kt` | `:app` (feature 002/003) | regra-alterada | LOW | Diagnóstico da ativação |
 | `res/values/strings.xml`, `README.md` | `:app`, documentação | componente-novo | LOW | Textos e instruções |
+| `launcher/android/app/src/main/java/br/tematv/launcher/activation/ActivationInputFormat.kt` e teste (E001) | `:app` | componente-novo | LOW | Formato do campo da senha com traços |
+| `launcher/android/app/src/main/java/br/tematv/launcher/home/HomeActivity.kt` (E001) | `:app` | regra-alterada | LOW | O campo da senha usa o formato ao digitar |
 
 ## Diff conceitual por componente
 
