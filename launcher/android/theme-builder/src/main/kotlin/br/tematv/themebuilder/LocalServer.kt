@@ -1,5 +1,10 @@
 package br.tematv.themebuilder
 
+import br.tematv.themebuilder.install.InstallEnvironment
+import br.tematv.themebuilder.install.InstallRequest
+import br.tematv.themebuilder.install.InstallService
+import br.tematv.themebuilder.install.StepResponse
+import br.tematv.themebuilder.install.toResponse
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpServer
 import kotlinx.serialization.KSerializer
@@ -11,6 +16,7 @@ import java.io.File
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.util.Base64
+import java.util.concurrent.Executors
 
 @Serializable
 private data class ErrorBody(val error: String, val field: String? = null, val code: String? = null)
@@ -69,6 +75,9 @@ private data class ActivationStatusBody(
 private data class ActivationRequestBody(@SerialName("device_code") val deviceCode: String, val customer: String = "")
 
 @Serializable
+private data class IpBody(val ip: String)
+
+@Serializable
 private data class ActivationBody(
     @SerialName("device_code") val deviceCode: String,
     @SerialName("activation_code") val activationCode: String,
@@ -82,6 +91,7 @@ class LocalServer(
     private val activation: ResellerActivation,
     private val presets: Presets,
     private val themesDir: File,
+    private val install: InstallService,
 ) {
 
     /** Abre a porta em `127.0.0.1`; lança `java.net.BindException` se estiver ocupada. */
@@ -89,6 +99,8 @@ class LocalServer(
         val guard = LocalRequestGuard(port)
         val server = HttpServer.create(InetSocketAddress(InetAddress.getLoopbackAddress(), port), 0)
         server.createContext("/") { exchange -> handle(exchange, guard) }
+        // Várias linhas de execução: a espera da autorização na TV (até 120 s) não trava a página (D-03).
+        server.executor = Executors.newFixedThreadPool(SERVER_THREADS)
         server.start()
         return server
     }
@@ -146,6 +158,7 @@ class LocalServer(
                 sendJson(exchange, 201, ClientProject.serializer(), store.create(body.type, body.displayName, body.themeId))
             }
             segments.size >= 3 && segments[1] == "clientes" -> routeClient(exchange, method, segments[2], segments.drop(3))
+            segments.size >= 3 && segments[1] == "instalacao" -> routeInstall(exchange, method, segments.drop(2))
             segments == listOf("api", "ativacao") && method == "GET" ->
                 sendJson(
                     exchange, 200, ActivationStatusBody.serializer(),
@@ -172,6 +185,28 @@ class LocalServer(
                 val built = builder.build(store.get(themeId), store.projectDir(themeId))
                 println("Pacote gerado: ${built.file} (${built.sizeBytes} bytes)")
                 sendJson(exchange, 200, PackageBody.serializer(), PackageBody(built.file.path, built.sizeBytes, built.adbCommands))
+            }
+            else -> throw UserInputException(null, "Caminho não encontrado: $method ${exchange.requestURI.path}", 404)
+        }
+    }
+
+    private fun routeInstall(exchange: HttpExchange, method: String, rest: List<String>) {
+        when {
+            rest == listOf("ambiente") && method == "GET" ->
+                sendJson(exchange, 200, InstallEnvironment.serializer(), install.environment())
+            rest == listOf("verificar") && method == "POST" -> {
+                val body = readJson(exchange, IpBody.serializer())
+                sendJson(exchange, 200, StepResponse.serializer(), install.check(body.ip).toResponse())
+            }
+            rest.size == 2 && rest[0] == "etapas" && method == "POST" -> {
+                val request = readJson(exchange, InstallRequest.serializer())
+                val outcome = install.runStep(rest[1], request)
+                println("Instalação ${request.ip}: ${rest[1]} ${outcome.status.name.lowercase()}")
+                sendJson(exchange, 200, StepResponse.serializer(), outcome.toResponse())
+            }
+            rest == listOf("desfazer") && method == "POST" -> {
+                val request = readJson(exchange, InstallRequest.serializer())
+                sendJson(exchange, 200, StepResponse.serializer(), install.undo(request).toResponse())
             }
             else -> throw UserInputException(null, "Caminho não encontrado: $method ${exchange.requestURI.path}", 404)
         }
@@ -273,6 +308,7 @@ class LocalServer(
 
     private companion object {
         const val MAX_REQUEST_BYTES = 30 * 1024 * 1024
+        const val SERVER_THREADS = 8
         val staticNamePattern = Regex("^[a-z]+\\.(html|css|js)$")
     }
 }

@@ -28,6 +28,9 @@ class ThemeImportProvider : ContentProvider() {
 
         // O significado de "w" varia entre versões do Android; a escrita sempre substitui o arquivo inteiro.
         val isReadOnly = mode == "r"
+        if (!isReadOnly && !ThemeImportNames.isWritable(fileName)) {
+            throw FileNotFoundException("$fileName é só para leitura")
+        }
         val fileMode = if (isReadOnly) {
             ParcelFileDescriptor.MODE_READ_ONLY
         } else {

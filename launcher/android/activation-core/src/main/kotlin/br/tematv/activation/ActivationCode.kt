@@ -15,10 +15,11 @@ object ActivationDigits {
     private val MODULUS = 1_000_000_000_000uL
     private val ALLOWED_SEPARATORS = setOf(' ', '-', '.')
 
-    /** Tira separadores; devolve os 12 dígitos ou nulo se a entrada não for exatamente 12 números. */
+    /** Tira espaços nas pontas (a senha pelo ADB chega com quebra de linha) e separadores; devolve os 12 dígitos ou nulo. */
     fun normalize(input: String): String? {
-        if (input.any { !it.isDigit() && it !in ALLOWED_SEPARATORS }) return null
-        return input.filter(Char::isDigit).takeIf { it.length == LENGTH }
+        val trimmed = input.trim()
+        if (trimmed.any { !it.isDigit() && it !in ALLOWED_SEPARATORS }) return null
+        return trimmed.filter(Char::isDigit).takeIf { it.length == LENGTH }
     }
 
     fun format(digits: String): String = digits.chunked(4).joinToString("-")

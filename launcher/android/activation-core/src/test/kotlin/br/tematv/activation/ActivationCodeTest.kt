@@ -34,6 +34,9 @@ class ActivationCodeTest {
     fun acceptsSeparatorsAndRejectsOtherCharacters() {
         assertEquals("014254972025", ActivationDigits.normalize("0142-5497-2025"))
         assertEquals("014254972025", ActivationDigits.normalize(" 0142 5497 2025 "))
+        assertEquals("014254972025", ActivationDigits.normalize("0142-5497-2025\n"))
+        assertEquals("014254972025", ActivationDigits.normalize("\r\n014254972025\r\n"))
+        assertNull(ActivationDigits.normalize("0142\n5497-2025"))
         assertNull(ActivationDigits.normalize("0142-5497-202"))
         assertNull(ActivationDigits.normalize("0142-5497-20255"))
         assertNull(ActivationDigits.normalize("0142-5497-202a"))

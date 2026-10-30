@@ -2,6 +2,8 @@ package br.tematv.launcher
 
 import android.app.Application
 import br.tematv.launcher.activation.ActivationService
+import br.tematv.launcher.status.AppStatusPublisher
+import br.tematv.launcher.theme.ThemeOrigin
 import br.tematv.launcher.theme.AndroidThemeLogger
 import br.tematv.launcher.theme.DefaultThemeProvider
 import br.tematv.launcher.theme.SharedPreferencesThemeState
@@ -24,6 +26,7 @@ class TemaTvApplication : Application() {
         private set
 
     private lateinit var themeStorage: ThemeStorage
+    private lateinit var appStatusPublisher: AppStatusPublisher
 
     override fun onCreate() {
         super.onCreate()
@@ -31,6 +34,7 @@ class TemaTvApplication : Application() {
         themeStorage = ThemeStorage.fromContext(this)
         themeStorage.ensureThemesDir()
         activationService = ActivationService(this)
+        appStatusPublisher = AppStatusPublisher(this)
 
         themeRepository = ThemeRepository(
             packageStore = themeStorage,
@@ -42,12 +46,19 @@ class TemaTvApplication : Application() {
         applicationScope.launch { reloadImports() }
     }
 
-    /** Lê o que o ADB enviou pela importação: tema ativo e senha de ativação; publica o código do aparelho. */
+    /** Lê o que o ADB enviou pela importação (tema ativo e senha); publica o código do aparelho e o estado do app. */
     suspend fun reloadImports() {
         withContext(Dispatchers.IO) {
             activationService.publishDeviceCode(themeStorage)
             activationService.importActivationCode(themeStorage)
         }
-        themeRepository.reload()
+        val activeTheme = themeRepository.reload()
+        withContext(Dispatchers.IO) {
+            appStatusPublisher.publish(
+                themeStorage,
+                activated = activationService.isActivated(),
+                activeThemeId = activeTheme.theme.manifest.themeId.takeIf { activeTheme.origin != ThemeOrigin.Default },
+            )
+        }
     }
 }

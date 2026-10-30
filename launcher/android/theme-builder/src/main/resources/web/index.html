@@ -12,6 +12,7 @@
     <strong class="brand">TemaTV</strong>
     <nav>
       <button type="button" class="tab" data-view="clients">Clientes</button>
+      <button type="button" class="tab" data-view="install">Instalar na TV</button>
       <button type="button" class="tab" data-view="activation">Ativar TV</button>
     </nav>
   </header>
@@ -104,6 +105,43 @@
         <div class="preview-column">
           <div id="preview" class="preview" aria-label="Prévia da tela da TV"></div>
           <p class="muted">Prévia aproximada da tela inicial em 1920×1080. A TV é a referência final.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="install-view" class="view" hidden>
+      <h1>Instalar na TV</h1>
+      <div class="install-layout">
+        <form id="install-form" class="card" autocomplete="off">
+          <p id="install-environment" class="banner" hidden></p>
+          <label>Cliente (com pacote gerado)
+            <select name="theme_id" data-field="theme_id"></select>
+          </label>
+          <label>IP da TV <small>Configurações › Rede, na TV</small>
+            <input name="ip" inputmode="decimal" placeholder="192.168.1.2" data-field="ip">
+          </label>
+          <p class="banner">Ligue a TV com o controle e deixe-a na tela inicial. A depuração por rede precisa estar ligada nas Opções do desenvolvedor.</p>
+          <div class="actions">
+            <button type="button" id="check-tv">Verificar TV</button>
+            <button type="button" id="start-install" class="primary" disabled>Instalar</button>
+          </div>
+          <p id="tv-status" class="muted"></p>
+          <details class="muted">
+            <summary>Como ligar a depuração por rede na TV</summary>
+            <ol>
+              <li>Configurações › Preferências do dispositivo › Sobre: clique 7 vezes em "Build".</li>
+              <li>Volte e abra "Opções do desenvolvedor".</li>
+              <li>Ligue "Depuração USB" e "Depuração por rede" (ou "ADB pela rede").</li>
+            </ol>
+          </details>
+          <hr>
+          <button type="button" id="undo-install">Desfazer instalação nesta TV</button>
+        </form>
+        <div class="card">
+          <h2>Etapas <span id="install-elapsed" class="muted"></span></h2>
+          <p id="authorization-hint" class="banner attention" hidden>Na TV, aceite o aviso "Permitir depuração?" e marque "Sempre permitir".</p>
+          <ol id="install-steps" class="install-steps"></ol>
+          <div id="install-result" class="result" hidden></div>
         </div>
       </div>
     </section>

@@ -13,6 +13,14 @@ class ThemeImportNamesTest {
         assertEquals("active_theme.txt", ThemeImportNames.fileNameFrom(listOf("active_theme.txt")))
         assertEquals("device_code.txt", ThemeImportNames.fileNameFrom(listOf("device_code.txt")))
         assertEquals("activation_code.txt", ThemeImportNames.fileNameFrom(listOf("activation_code.txt")))
+        assertEquals("app_status.json", ThemeImportNames.fileNameFrom(listOf("app_status.json")))
+    }
+
+    @Test
+    fun appStatusIsReadOnly() {
+        assertEquals(false, ThemeImportNames.isWritable("app_status.json"))
+        assertEquals(true, ThemeImportNames.isWritable("activation_code.txt"))
+        assertEquals(true, ThemeImportNames.isWritable("igreja.tematv"))
     }
 
     @Test

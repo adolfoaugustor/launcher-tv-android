@@ -84,3 +84,18 @@ main { padding: 20px 24px 48px; max-width: 1500px; margin: 0 auto; }
   .preview-column { position: static; }
   main { padding: 16px; }
 }
+
+.install-layout { display: grid; grid-template-columns: minmax(320px, 460px) 1fr; gap: 20px; align-items: start; }
+.banner.attention { background: #fff3cd; font-weight: 600; margin: 0 0 12px; }
+form .banner { margin: 0 0 14px; }
+.install-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.install-steps li { display: grid; grid-template-columns: 28px 1fr auto; gap: 8px; align-items: start; padding: 8px 10px; border-radius: 8px; background: var(--bg); }
+.install-steps .icon { font-weight: 700; text-align: center; }
+.install-steps .detail { font-size: .9rem; color: var(--muted); }
+.install-steps .time { font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.install-steps li.ok .icon { color: var(--ok); }
+.install-steps li.error { background: #fdecea; }
+.install-steps li.error .icon, .install-steps li.error .detail { color: var(--error); }
+.install-steps li .step-actions { grid-column: 2 / 4; display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+hr { border: none; border-top: 1px solid var(--line); margin: 16px 0; }
+@media (max-width: 900px) { .install-layout { grid-template-columns: 1fr; } }

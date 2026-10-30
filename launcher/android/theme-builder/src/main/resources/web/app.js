@@ -1,6 +1,7 @@
 import { api, clearErrors, showFieldError } from "./api.js";
 import { renderPreview, keepPreviewFitted } from "./preview.js";
 import { showActivation } from "./activation.js";
+import { showInstall } from "./install.js";
 
 const $ = (id) => document.getElementById(id);
 const globalError = $("global-error");
@@ -18,7 +19,7 @@ function showGlobalError(message) {
 
 function showView(name) {
   showGlobalError("");
-  for (const view of ["clients", "project", "activation"]) $(`${view}-view`).hidden = view !== name;
+  for (const view of ["clients", "project", "install", "activation"]) $(`${view}-view`).hidden = view !== name;
   document.querySelectorAll(".tab").forEach((tab) => {
     tab.classList.toggle("active", tab.dataset.view === name || (name === "project" && tab.dataset.view === "clients"));
   });
@@ -357,6 +358,9 @@ document.querySelectorAll(".tab").forEach((tab) => {
     if (tab.dataset.view === "activation") {
       showView("activation");
       await showActivation();
+    } else if (tab.dataset.view === "install") {
+      showView("install");
+      await showInstall();
     } else {
       await showClients();
     }

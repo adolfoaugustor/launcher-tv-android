@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -20,6 +22,19 @@ if (activationSecret.isEmpty()) {
     }
 }
 
+// Chave definitiva de assinatura (feature 006): fora do repositório; o código do aparelho depende dela.
+val signingPropertiesFile = file("${System.getProperty("user.home")}/.config/tematv/assinatura.properties")
+val signingProperties = Properties().apply {
+    if (signingPropertiesFile.isFile) signingPropertiesFile.inputStream().use { load(it) }
+}
+if (signingProperties.isEmpty) {
+    tasks.matching { it.name == "preReleaseBuild" }.configureEach {
+        doFirst {
+            throw GradleException("Chave de assinatura não encontrada em $signingPropertiesFile. Crie com: tools/gerar-chave-assinatura.sh")
+        }
+    }
+}
+
 android {
     namespace = "br.tematv.launcher"
     compileSdk = 34
@@ -28,13 +43,30 @@ android {
         applicationId = "br.tematv.launcher"
         minSdk = 28
         targetSdk = 34
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 7
+        versionName = "0.6.1"
         buildConfigField("String", "ACTIVATION_SECRET", "\"$activationSecret\"")
     }
 
     buildFeatures {
         buildConfig = true
+    }
+
+    signingConfigs {
+        if (!signingProperties.isEmpty) {
+            create("release") {
+                storeFile = file(signingProperties.getProperty("storeFile"))
+                storePassword = signingProperties.getProperty("storePassword")
+                keyAlias = signingProperties.getProperty("keyAlias")
+                keyPassword = signingProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.findByName("release")
+        }
     }
 
     compileOptions {

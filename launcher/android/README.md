@@ -74,13 +74,28 @@ tematv                     # abre a página (no WSL, no navegador do Windows)
 
 Depois de gerar o pacote, a página mostra os comandos do ADB para enviá-lo à TV.
 
+### Feature 006, instalação na TV
+
+- Aba "Instalar na TV" da página `tematv`: escolha o cliente, digite o IP da TV e clique em "Instalar". A ferramenta conecta pelo ADB, instala o launcher de produção, libera o início automático (TCL), envia o tema, ativa a TV com a senha gerada na hora, liga a troca da tela inicial (preservando outros serviços de acessibilidade) e confere a tela temática depois do Home. Cada etapa pode ser repetida; cada tentativa fica registrada em `~/tematv/instalacoes/<data>-<ip>.log` (sem a senha).
+- O app publica `app_status.json` pela importação do ADB (versão, assinatura, ativação e tema aplicado), usado para conferir cada etapa.
+- O APK de produção é assinado com a **chave definitiva do revendedor**, criada uma vez:
+
+```bash
+tools/gerar-chave-assinatura.sh   # uma única vez
+tools/instalar-tematv.sh          # compila a ferramenta e o launcher de produção (~/tematv/launcher/)
+```
+
+**Faça cópia de segurança** de `~/.config/tematv/assinatura.jks`, `~/.config/tematv/assinatura.properties` e `~/.config/tematv/activation-secret`. O código do aparelho depende da chave: perdê-la impede atualizar as TVs instaladas, e trocá-la exige reativar todas. Sem a chave, só a compilação de release (`:app:assembleRelease`) para.
+
+Na TV, uma vez: Configurações › Preferências do dispositivo › Sobre › 7 cliques em "Build"; em Opções do desenvolvedor, ligar "Depuração USB" e "Depuração por rede". A depuração fica ligada depois da instalação, para trocar o tema pela mesma aba.
+
 ## Compilar e testar
 
 Pré-requisitos: JDK 17 e Android SDK (plataforma 34). O Gradle 8.7 vem pelo wrapper do projeto; crie `local.properties` com `sdk.dir=<caminho do SDK>`.
 
 ```bash
 ./gradlew :theme-core:test :activation-core:test :theme-builder:test :app:testDebugUnitTest
-./gradlew :app:assembleDebug :app:packSampleThemes
+./gradlew :app:assembleDebug :app:assembleRelease :app:packSampleThemes
 ```
 
 Instalação das ferramentas e teste na TV, passo a passo: `_reversa_forward/001-theme-engine/onboarding.md`, na raiz do repositório.

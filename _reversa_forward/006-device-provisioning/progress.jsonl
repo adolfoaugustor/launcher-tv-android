@@ -1,0 +1,23 @@
+{"ts": "2026-10-30T20:31:06Z", "action": "T001", "status": "done", "files": ["launcher/android/tools/gerar-chave-assinatura.sh"]}
+{"ts": "2026-10-30T20:31:06Z", "action": "T002", "status": "done", "files": ["launcher/android/app/build.gradle.kts"]}
+{"ts": "2026-10-30T20:31:06Z", "action": "T003", "status": "done", "files": ["~/.config/tematv/assinatura.jks"]}
+{"ts": "2026-10-30T20:31:06Z", "action": "T004", "status": "done", "files": ["launcher/android/app/build.gradle.kts"]}
+{"ts": "2026-10-30T20:32:22Z", "action": "T007", "status": "done", "files": ["launcher/android/app/src/test/java/br/tematv/launcher/status/AppStatusTest.kt", "launcher/android/app/src/test/java/br/tematv/launcher/theme/ThemeImportNamesTest.kt"]}
+{"ts": "2026-10-30T20:32:22Z", "action": "T008", "status": "done", "files": ["launcher/android/app/src/main/java/br/tematv/launcher/status/AppStatus.kt"]}
+{"ts": "2026-10-30T20:32:22Z", "action": "T009", "status": "done", "files": ["launcher/android/app/src/main/java/br/tematv/launcher/TemaTvApplication.kt", "launcher/android/app/src/main/java/br/tematv/launcher/theme/ThemeImportNames.kt", "launcher/android/app/src/main/java/br/tematv/launcher/theme/ThemeImportProvider.kt"]}
+{"ts": "2026-10-30T20:36:30Z", "action": "T005", "status": "done", "files": ["launcher/android/theme-builder/src/test/kotlin/br/tematv/themebuilder/install/AccessibilityListTest.kt"]}
+{"ts": "2026-10-30T20:36:31Z", "action": "T006", "status": "done", "files": ["launcher/android/theme-builder/src/test/kotlin/br/tematv/themebuilder/install/InstallStepsTest.kt"]}
+{"ts": "2026-10-30T20:36:31Z", "action": "T010", "status": "done", "files": ["launcher/android/theme-builder/src/main/kotlin/br/tematv/themebuilder/install/Adb.kt"]}
+{"ts": "2026-10-30T20:36:32Z", "action": "T011", "status": "done", "files": ["launcher/android/theme-builder/src/main/kotlin/br/tematv/themebuilder/install/AccessibilityList.kt"]}
+{"ts": "2026-10-30T20:36:32Z", "action": "T012", "status": "done", "files": ["launcher/android/theme-builder/src/main/kotlin/br/tematv/themebuilder/install/LauncherRelease.kt"]}
+{"ts": "2026-10-30T20:36:32Z", "action": "T013", "status": "done", "files": ["launcher/android/theme-builder/src/main/kotlin/br/tematv/themebuilder/install/InstallLog.kt"]}
+{"ts": "2026-10-30T20:36:33Z", "action": "T014", "status": "done", "files": ["launcher/android/theme-builder/src/main/kotlin/br/tematv/themebuilder/install/InstallSteps.kt"]}
+{"ts": "2026-10-30T20:36:33Z", "action": "T015", "status": "done", "files": ["launcher/android/theme-builder/src/main/kotlin/br/tematv/themebuilder/install/InstallSteps.kt"]}
+{"ts": "2026-10-30T20:36:34Z", "action": "T016", "status": "done", "files": ["launcher/android/theme-builder/src/main/kotlin/br/tematv/themebuilder/install/InstallSteps.kt"]}
+{"ts": "2026-10-30T20:41:28Z", "action": "T017", "status": "done", "files": ["launcher/android/theme-builder/src/main/kotlin/br/tematv/themebuilder/LocalServer.kt", "launcher/android/theme-builder/src/main/kotlin/br/tematv/themebuilder/install/InstallService.kt"]}
+{"ts": "2026-10-30T20:41:29Z", "action": "T018", "status": "done", "files": ["launcher/android/theme-builder/src/main/kotlin/br/tematv/themebuilder/Main.kt"]}
+{"ts": "2026-10-30T20:41:29Z", "action": "T019", "status": "done", "files": ["launcher/android/theme-builder/src/main/resources/web/install.js", "launcher/android/theme-builder/src/main/resources/web/index.html", "launcher/android/theme-builder/src/main/resources/web/styles.css", "launcher/android/theme-builder/src/main/resources/web/app.js"]}
+{"ts": "2026-10-30T20:41:29Z", "action": "T020", "status": "done", "files": ["launcher/android/tools/instalar-tematv.sh"]}
+{"ts": "2026-10-30T20:42:28Z", "action": "T021", "status": "done", "files": ["launcher/android/"]}
+{"ts": "2026-10-30T20:42:28Z", "action": "T022", "status": "done", "files": ["launcher/android/README.md"]}
+{"ts": "2026-10-30T21:58:24Z", "action": "T023", "status": "done", "files": ["_reversa_forward/006-device-provisioning/onboarding.md", "launcher/android/activation-core/src/main/kotlin/br/tematv/activation/ActivationCode.kt", "launcher/android/sample-themes/biblia-exemplo/theme.json"]}

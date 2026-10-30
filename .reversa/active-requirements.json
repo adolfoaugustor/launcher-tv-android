@@ -1,9 +1,9 @@
 {
   "schema-version": 1,
-  "feature-dir": "_reversa_forward/005-theme-builder",
-  "feature-id": "005",
-  "short-name": "theme-builder",
-  "started-at": "2026-10-30T15:52:52-03:00",
+  "feature-dir": "_reversa_forward/006-device-provisioning",
+  "feature-id": "006",
+  "short-name": "device-provisioning",
+  "started-at": "2026-10-30T17:12:33-03:00",
   "current-stage": "done",
   "stages-completed": [
     "requirements",

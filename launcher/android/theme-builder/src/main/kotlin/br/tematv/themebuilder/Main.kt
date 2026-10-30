@@ -1,5 +1,8 @@
 package br.tematv.themebuilder
 
+import br.tematv.themebuilder.install.InstallLog
+import br.tematv.themebuilder.install.InstallService
+import br.tematv.themebuilder.install.ProcessCommandRunner
 import java.io.File
 import java.net.BindException
 import kotlin.system.exitProcess
@@ -11,13 +14,23 @@ fun main(args: Array<String>) {
     val home = File(System.getProperty("user.home"))
     val presets = Presets.load()
     val themesDir = File(home, "tematv/temas")
+    val store = ProjectStore(File(home, "tematv/clientes"), presets)
+    val activation = ResellerActivation(File(home, ".config/tematv/activation-secret"), File(home, "tematv/ativacoes.csv"))
     val server = LocalServer(
-        store = ProjectStore(File(home, "tematv/clientes"), presets),
+        store = store,
         images = ImageProcessor(),
         builder = PackageBuilder(themesDir, presets),
-        activation = ResellerActivation(File(home, ".config/tematv/activation-secret"), File(home, "tematv/ativacoes.csv")),
+        activation = activation,
         presets = presets,
         themesDir = themesDir,
+        install = InstallService(
+            runner = ProcessCommandRunner(),
+            launcherDir = File(home, "tematv/launcher"),
+            log = InstallLog(File(home, "tematv/instalacoes")),
+            activation = activation,
+            store = store,
+            themesDir = themesDir,
+        ),
     )
     val port = (FIRST_PORT..LAST_PORT).firstOrNull { port ->
         try {
