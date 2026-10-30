@@ -2,6 +2,8 @@
 
 App Android TV que troca a tela inicial da TV por um tema da igreja ou do cliente.
 
+**Começando do zero?** Veja [INSTALACAO.md](INSTALACAO.md): o que instalar no notebook (Java 17, ADB, Android SDK; o Gradle vem pelo `./gradlew`), os segredos do revendedor e como preparar e conectar a TV.
+
 ## O que existe hoje
 
 ### Feature 001, motor de temas
@@ -91,14 +93,14 @@ Na TV, uma vez: Configurações › Preferências do dispositivo › Sobre › 7
 
 ## Compilar e testar
 
-Pré-requisitos: JDK 17 e Android SDK (plataforma 34). O Gradle 8.7 vem pelo wrapper do projeto; crie `local.properties` com `sdk.dir=<caminho do SDK>`.
+Pré-requisitos: JDK 17 e Android SDK (plataforma 34). O Gradle 8.7 vem pelo wrapper do projeto; crie `local.properties` com `sdk.dir=<caminho do SDK>`. Passo a passo em [INSTALACAO.md](INSTALACAO.md).
 
 ```bash
 ./gradlew :theme-core:test :activation-core:test :theme-builder:test :app:testDebugUnitTest
 ./gradlew :app:assembleDebug :app:assembleRelease :app:packSampleThemes
 ```
 
-Instalação das ferramentas e teste na TV, passo a passo: `_reversa_forward/001-theme-engine/onboarding.md`, na raiz do repositório.
+Instalação das ferramentas e conexão com a TV, passo a passo: [INSTALACAO.md](INSTALACAO.md).
 
 ## Formato do pacote de tema
 
