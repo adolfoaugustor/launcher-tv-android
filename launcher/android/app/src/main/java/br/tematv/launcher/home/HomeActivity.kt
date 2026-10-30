@@ -41,7 +41,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.time.Instant
-import java.time.LocalDate
 
 /** Tela inicial temática: cabeçalho, versículo do dia e grade de apps dentro da moldura do tema. */
 class HomeActivity : ComponentActivity() {
@@ -73,6 +72,8 @@ class HomeActivity : ComponentActivity() {
     private val gridAdapter = AppGridAdapter(::openApp)
     private var activeTheme: ActiveTheme? = null
     private var gridReceivedInitialFocus = false
+    private var verseIndex: Int? = null
+    private var previousVerseIndex: Int? = null
     private val hideNotice = Runnable { noticeText.visibility = View.GONE }
     private val endActivationLock = Runnable {
         activateButton.isEnabled = true
@@ -81,10 +82,6 @@ class HomeActivity : ComponentActivity() {
 
     private val packageChangeReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) = reloadApps()
-    }
-
-    private val dateChangeReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) = showVerseOfTheDay()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -141,13 +138,9 @@ class HomeActivity : ComponentActivity() {
             addAction(Intent.ACTION_PACKAGE_REPLACED)
             addDataScheme("package")
         })
-        registerSystemReceiver(dateChangeReceiver, IntentFilter().apply {
-            addAction(Intent.ACTION_DATE_CHANGED)
-            addAction(Intent.ACTION_TIME_CHANGED)
-            addAction(Intent.ACTION_TIMEZONE_CHANGED)
-        })
         reloadApps()
-        showVerseOfTheDay()
+        verseIndex = null
+        showVerse()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -211,7 +204,6 @@ class HomeActivity : ComponentActivity() {
 
     override fun onStop() {
         unregisterReceiver(packageChangeReceiver)
-        unregisterReceiver(dateChangeReceiver)
         super.onStop()
     }
 
@@ -263,7 +255,7 @@ class HomeActivity : ComponentActivity() {
             accentColor = accentColor,
             typeface = images.typeface,
         )
-        showVerseOfTheDay()
+        showVerse()
     }
 
     private fun styleHeaderButton(button: Button, backgroundColor: Int, textColor: Int, accentColor: Int, typeface: Typeface) {
@@ -291,9 +283,15 @@ class HomeActivity : ComponentActivity() {
         button.typeface = typeface
     }
 
-    private fun showVerseOfTheDay() {
+    /** Mantém o versículo sorteado enquanto a tela está na frente; cada nova abertura sorteia outro. */
+    private fun showVerse() {
         val manifest = activeTheme?.theme?.manifest ?: return
-        val verse = manifest.verses[VerseOfTheDay.indexFor(LocalDate.now(), manifest.verses.size)]
+        val index = verseIndex?.takeIf { it < manifest.verses.size }
+            ?: VersePicker.next(manifest.verses.size, previousVerseIndex).also {
+                verseIndex = it
+                previousVerseIndex = it
+            }
+        val verse = manifest.verses[index]
         verseText.text = verse.text
         verseReferenceText.text = getString(R.string.verse_reference, verse.reference, verse.version, manifest.versesAttribution)
     }

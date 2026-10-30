@@ -26,6 +26,9 @@
 | `launcher/android/tools/make_placeholder_art.py` | Arte provisória | componente-novo | LOW | Gera também o banner do launcher |
 | `launcher/android/tools/make_large_test_theme.py` | Ferramenta de medida | componente-novo | LOW | Pacote de ~14 MB para medir a aplicação |
 | `launcher/android/README.md` | Documentação | componente-novo | LOW | Tela inicial e lista de utilitários escondidos |
+| `launcher/android/app/src/main/java/br/tematv/launcher/home/VersePicker.kt` e `VersePickerTest.kt` (E001) | `:app` | regra-alterada | LOW | Sorteio do versículo; substituem `VerseOfTheDay.kt` e o teste, apagados com a confirmação do usuário |
+| `launcher/android/app/src/main/java/br/tematv/launcher/home/HomeActivity.kt` (E001) | `:app` | regra-alterada | LOW | Sorteia a cada `onStart` e mantém o versículo enquanto a tela está na frente; sai o receptor de troca de data |
+| `launcher/android/app/build.gradle.kts` (E001) | `:app` | regra-alterada | LOW | Versão 8 / 0.6.2 para a TV receber a mudança |
 
 ## Diff conceitual por componente
 

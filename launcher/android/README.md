@@ -119,3 +119,7 @@ python3 tools/make_large_test_theme.py
 ```
 
 Versículos: o tema padrão e o exemplo bíblico trazem uma lista pronta de 20 versículos da Nova Versão Internacional (NVI), de vários livros, com a atribuição exigida pela Biblica. O texto foi copiado da BibleGateway (NVI-PT, © 1993, 2000 Biblica, Inc.). A Biblica permite citar até 500 versículos sem pedido formal, desde que com a atribuição; confirme com a Biblica antes de vender o produto em escala.
+
+	
+Código do aparelho (aparece na TV)	2544-3298-7734
+Senha para digitar	8065-4698-2216

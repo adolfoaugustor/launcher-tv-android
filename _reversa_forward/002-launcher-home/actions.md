@@ -89,6 +89,12 @@
 - Observação para a feature 6: logo após `adb install -r`, o `content write` respondeu `Could not find provider` por alguns segundos. A instalação precisa repetir a importação até o provider responder.
 - O app (build de debug) ficou instalado na TV com o tema `biblia-exemplo` ativo; abre pela lista de apps do Google TV.
 
+## Emendas
+
+| ID | Descrição | Dependências | Paralelismo | Arquivo alvo | Confidência | Status |
+|----|-----------|--------------|-------------|--------------|-------------|--------|
+| E001 | Versículo sorteado a cada abertura da tela inicial, sem repetir o anterior, no lugar do versículo do dia; versão 0.6.2 | - | - | `launcher/android/app/src/main/java/br/tematv/launcher/home/VersePicker.kt` | 🟢 | `[X]` |
+
 ## Histórico de alterações
 
 | Data | Alteração | Autor |

@@ -215,3 +215,11 @@ Cenário: Foco volta ao último app
 |------|-----------|-------|
 | 2026-10-30 | Versão inicial gerada por `/reversa-requirements` | reversa |
 | 2026-10-30 | Sessão de esclarecimentos: banner, utilitários da TCL e posição dos itens fixos | reversa-clarify |
+
+## Emendas
+
+### E001, 2026-10-30
+
+O que muda: o versículo deixa de ser o "versículo do dia" (o mesmo o dia inteiro) e passa a ser sorteado cada vez que a tela inicial aparece (ligar a TV, apertar Home, voltar de um app), sem repetir o versículo anterior; RN-03 e RF-07 passam a valer assim, mantendo referência, sigla e atribuição.
+Motivo: o usuário viu na TV que o versículo não trocava e pediu que fosse aleatório, escolhendo "sorteado ao abrir".
+Arquivos previstos: `launcher/android/app/src/main/java/br/tematv/launcher/home/VerseOfTheDay.kt` (substituído por `VersePicker.kt`), `HomeActivity.kt` e o teste correspondente.
