@@ -123,6 +123,24 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/takeoverWarningText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:alpha="0.85"
+        android:background="@color/notice_background"
+        android:paddingStart="12dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="4dp"
+        android:text="@string/takeover_service_warning"
+        android:textColor="#FFFFFF"
+        android:textSize="11sp"
+        android:visibility="gone" />
+
+    <TextView
         android:id="@+id/noticeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

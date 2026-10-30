@@ -29,11 +29,15 @@ import br.tematv.launcher.R
 import br.tematv.launcher.TemaTvApplication
 import br.tematv.launcher.theme.ActiveTheme
 import br.tematv.launcher.theme.ThemeImageLoader
+import br.tematv.launcher.takeover.AccessibilityServiceState
+import br.tematv.launcher.takeover.HomeTakeoverService
+import br.tematv.launcher.takeover.TakeoverPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
+import java.time.Instant
 import java.time.LocalDate
 
 /** Tela inicial temática: cabeçalho, versículo do dia e grade de apps dentro da moldura do tema. */
@@ -52,6 +56,7 @@ class HomeActivity : ComponentActivity() {
     private lateinit var appGrid: RecyclerView
     private lateinit var emptyGridText: TextView
     private lateinit var noticeText: TextView
+    private lateinit var takeoverWarningText: TextView
 
     private val themeRepository get() = (application as TemaTvApplication).themeRepository
     private val appsSource by lazy { InstalledAppsSource(this) }
@@ -83,6 +88,7 @@ class HomeActivity : ComponentActivity() {
         appGrid = findViewById(R.id.appGrid)
         emptyGridText = findViewById(R.id.emptyGridText)
         noticeText = findViewById(R.id.noticeText)
+        takeoverWarningText = findViewById(R.id.takeoverWarningText)
 
         appGrid.layoutManager = GridLayoutManager(this, GRID_COLUMNS)
         appGrid.adapter = gridAdapter
@@ -119,6 +125,27 @@ class HomeActivity : ComponentActivity() {
         })
         reloadApps()
         showVerseOfTheDay()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) HomeTakeoverService.onThemedHomeVisible()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showTakeoverServiceWarningIfNeeded()
+    }
+
+    /** Faixa discreta quando a troca está ligada mas o Android desligou o serviço (RF-10, D-14). */
+    private fun showTakeoverServiceWarningIfNeeded() {
+        val takeoverPreferences = TakeoverPreferences(this)
+        val serviceOff = takeoverPreferences.isTakeoverEnabled && !AccessibilityServiceState.isServiceEnabled(this)
+        takeoverWarningText.visibility = if (serviceOff) View.VISIBLE else View.GONE
+        if (serviceOff) {
+            takeoverPreferences.recordServiceOff(Instant.now())
+            Log.w(LOG_TAG, "Troca da tela inicial: serviço de acessibilidade desligado")
+        }
     }
 
     override fun onStop() {

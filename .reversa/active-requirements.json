@@ -1,9 +1,9 @@
 {
   "schema-version": 1,
-  "feature-dir": "_reversa_forward/002-launcher-home",
-  "feature-id": "002",
-  "short-name": "launcher-home",
-  "started-at": "2026-10-30T08:11:24-03:00",
+  "feature-dir": "_reversa_forward/003-home-takeover",
+  "feature-id": "003",
+  "short-name": "home-takeover",
+  "started-at": "2026-10-30T09:08:38-03:00",
   "current-stage": "done",
   "stages-completed": [
     "requirements",

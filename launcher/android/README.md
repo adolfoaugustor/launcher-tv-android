@@ -25,6 +25,25 @@ Abrir a tela pelo ADB:
 adb shell am start -n br.tematv.launcher/.home.HomeActivity
 ```
 
+### Feature 003, troca da tela inicial
+
+- `app/src/main/java/br/tematv/launcher/takeover/`: serviço de acessibilidade (`HomeTakeoverService`) que abre a tela temática sempre que o launcher do Google aparece (Home, boot, volta do modo de espera). Ele só percebe qual app está em primeiro plano; não lê o conteúdo das telas.
+- O launcher do Google nunca é desativado. Para voltar a ele: tela "Tema" › segure OK por 3 s em "Voltar ao launcher original do Google". Para religar: abra o Launcher Temático pela lista de apps › "Tema" › "Usar o tema como tela inicial".
+- Se o Android desligar o serviço, a tela inicial mostra uma faixa discreta e a tela "Tema" mostra o passo a passo.
+
+Ligar o serviço pelo ADB (preservando outros serviços já ligados: ver `_reversa_forward/003-home-takeover/interfaces/ativacao-acessibilidade-adb.md`):
+
+```bash
+adb shell settings put secure enabled_accessibility_services br.tematv.launcher/br.tematv.launcher.takeover.HomeTakeoverService
+adb shell settings put secure accessibility_enabled 1
+```
+
+Teste acelerado de ciclos (a TV reinicia várias vezes):
+
+```bash
+tools/takeover_cycle_test.sh 192.168.1.2:5555 15 15
+```
+
 ## Compilar e testar
 
 Pré-requisitos: JDK 17 e Android SDK (plataforma 34). O Gradle 8.7 vem pelo wrapper do projeto; crie `local.properties` com `sdk.dir=<caminho do SDK>`.

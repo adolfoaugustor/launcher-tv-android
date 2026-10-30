@@ -22,4 +22,21 @@
     <string name="diagnostics_license">Licença</string>
     <string name="diagnostics_future_version">Disponível em versão futura</string>
     <string name="diagnostics_loading">Carregando…</string>
+    <string name="diagnostics_state_on">Ligada</string>
+    <string name="diagnostics_state_off">Desligada</string>
+    <string name="diagnostics_service_on">Ligado</string>
+    <string name="diagnostics_service_off">Desligado</string>
+    <string name="diagnostics_last_takeover">Última troca para o tema</string>
+    <string name="diagnostics_last_service_off">Serviço encontrado desligado em</string>
+    <string name="diagnostics_last_loop_pause">Última pausa contra repetição</string>
+    <string name="diagnostics_never">Nunca</string>
+
+    <string name="takeover_service_label">Launcher Temático</string>
+    <string name="takeover_service_description">Abre a tela temática da igreja sempre que a TV mostra a tela inicial do Google. Só percebe qual app está em primeiro plano; não lê o conteúdo das telas.</string>
+    <string name="takeover_disable">Voltar ao launcher original do Google</string>
+    <string name="takeover_enable">Usar o tema como tela inicial</string>
+    <string name="takeover_hold_hint">Segure OK por 3 segundos</string>
+    <string name="takeover_service_warning">O tema não está abrindo sozinho. Veja em Tema.</string>
+    <string name="takeover_service_steps">Para o tema abrir sozinho, ligue o serviço: Configurações › Acessibilidade › Launcher Temático › Ativar.</string>
+    <string name="takeover_open_accessibility_settings">Abrir Configurações de acessibilidade</string>
 </resources>
