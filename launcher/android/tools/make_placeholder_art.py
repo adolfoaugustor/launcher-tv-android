@@ -15,6 +15,7 @@ ANDROID_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_THEME_DIR = ANDROID_ROOT / "app/src/main/assets/default-theme"
 BIBLE_SAMPLE_DIR = ANDROID_ROOT / "sample-themes/biblia-exemplo"
 BURGER_SAMPLE_DIR = ANDROID_ROOT / "sample-themes/hamburguer-exemplo"
+LAUNCHER_BANNER_FILE = ANDROID_ROOT / "app/src/main/res/drawable-xhdpi/banner.png"
 
 FRAME_WIDTH = 260
 FRAME_HEIGHT = 340
@@ -248,6 +249,23 @@ def draw_product_logo():
     return canvas.downsample(s)
 
 
+def draw_launcher_banner():
+    """Banner 320x180 do launcher na lista de apps do Google TV."""
+    s = ANTIALIAS_SCALE
+    canvas = Canvas(320 * s, 180 * s)
+    canvas.fill_rounded_rect(0, 0, 320 * s - 1, 180 * s - 1, 18 * s, hex_color("#FFF6E0"))
+    canvas.fill_rounded_rect(8 * s, 8 * s, 312 * s, 172 * s, 14 * s, hex_color("#8FD3FF"))
+    canvas.fill_ellipse(160 * s, 230 * s, 230 * s, 110 * s, hex_color("#81C784"))
+    # Livro aberto com coração, o mesmo desenho do logotipo do produto
+    canvas.fill_polygon([(84 * s, 66 * s), (158 * s, 78 * s), (158 * s, 146 * s), (84 * s, 134 * s)], hex_color("#FFFFFF"))
+    canvas.fill_polygon([(162 * s, 78 * s), (236 * s, 66 * s), (236 * s, 134 * s), (162 * s, 146 * s)], hex_color("#F4ECD6"))
+    canvas.fill_rect(157 * s, 76 * s, 163 * s, 148 * s, hex_color("#7A4524"))
+    canvas.fill_ellipse(150 * s, 42 * s, 11 * s, 11 * s, hex_color("#E53935"))
+    canvas.fill_ellipse(170 * s, 42 * s, 11 * s, 11 * s, hex_color("#E53935"))
+    canvas.fill_polygon([(140 * s, 46 * s), (180 * s, 46 * s), (160 * s, 68 * s)], hex_color("#E53935"))
+    return canvas.downsample(s)
+
+
 def draw_kids_background():
     canvas = Canvas(1920, 1080)
     canvas.fill_vertical_gradient(hex_color("#8FD3FF"), hex_color("#FFF6E0"))
@@ -289,6 +307,8 @@ def main():
     burger_frame.save_png(BURGER_SAMPLE_DIR / "frame-hamburguer.png")
     product_logo.save_png(BURGER_SAMPLE_DIR / "logo.png")
     draw_burger_background().save_png(BURGER_SAMPLE_DIR / "fundo.png")
+
+    draw_launcher_banner().save_png(LAUNCHER_BANNER_FILE)
 
 
 if __name__ == "__main__":

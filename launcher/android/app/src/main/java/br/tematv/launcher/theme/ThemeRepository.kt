@@ -54,8 +54,9 @@ class ThemeRepository(
     val lastError: RecordedThemeError? get() = themeState.lastError
 
     suspend fun reload(): ActiveTheme = reloadMutex.withLock {
+        val startedAtNanos = System.nanoTime()
         val theme = withContext(ioDispatcher) { resolveActiveTheme() }
-        publish(theme)
+        publish(theme, elapsedMillis = (System.nanoTime() - startedAtNanos) / NANOS_PER_MILLI)
         theme
     }
 
@@ -104,10 +105,10 @@ class ThemeRepository(
 
     private fun defaultTheme() = ActiveTheme(defaultThemeSource.load(), ThemeOrigin.Default)
 
-    private fun publish(theme: ActiveTheme) {
+    private fun publish(theme: ActiveTheme, elapsedMillis: Long) {
         mutableActiveTheme.value = theme
         val suffix = if (theme.origin == ThemeOrigin.Default) " (padrão)" else ""
-        logger.info("Tema aplicado: ${theme.theme.manifest.themeId}$suffix")
+        logger.info("Tema aplicado: ${theme.theme.manifest.themeId}$suffix em $elapsedMillis ms")
     }
 
     private fun recordRejection(error: ThemeError, packageName: String?) {
@@ -121,5 +122,9 @@ class ThemeRepository(
         )
         val details = listOfNotNull(error.field, packageName?.let { "($it)" }, error.detail?.let { "- $it" })
         logger.warn((listOf("Pacote recusado: ${error.code.name}") + details).joinToString(" "))
+    }
+
+    private companion object {
+        const val NANOS_PER_MILLI = 1_000_000L
     }
 }

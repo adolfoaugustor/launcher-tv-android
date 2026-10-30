@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fundo da janela na cor do tema padrão: a primeira imagem nunca é uma tela preta (RF-16). -->
+    <style name="Theme.TemaTv" parent="@android:style/Theme.DeviceDefault.NoActionBar">
+        <item name="android:windowBackground">@color/default_theme_background</item>
+        <item name="android:textColor">@color/default_theme_text</item>
+    </style>
+</resources>

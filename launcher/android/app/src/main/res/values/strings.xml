@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Launcher Temático</string>
+    <string name="button_settings">Configurações</string>
+    <string name="button_theme">Tema</string>
+    <string name="empty_grid">Nenhum app instalado</string>
+    <string name="app_open_failed">Não foi possível abrir %1$s</string>
+    <string name="verse_reference">%1$s (%2$s) · %3$s</string>
+
+    <string name="theme_options_title">Tema</string>
+    <string name="diagnostics_title">Diagnóstico</string>
+    <string name="diagnostics_app_version">Versão do app</string>
+    <string name="diagnostics_active_theme">Tema ativo</string>
+    <string name="diagnostics_theme_origin">Origem</string>
+    <string name="diagnostics_origin_package">Pacote %1$s</string>
+    <string name="diagnostics_origin_default">Tema padrão embutido</string>
+    <string name="diagnostics_last_error">Último erro de tema</string>
+    <string name="diagnostics_no_error">Nenhum erro registrado</string>
+    <string name="diagnostics_error_detail">%1$s · pacote %2$s · %3$s</string>
+    <string name="diagnostics_takeover">Tema como tela inicial</string>
+    <string name="diagnostics_accessibility">Serviço de acessibilidade</string>
+    <string name="diagnostics_license">Licença</string>
+    <string name="diagnostics_future_version">Disponível em versão futura</string>
+    <string name="diagnostics_loading">Carregando…</string>
+</resources>

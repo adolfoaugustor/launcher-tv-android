@@ -83,7 +83,7 @@ class ThemeRepositoryTest {
         assertEquals(ThemeOrigin.Package("biblia-exemplo.tematv"), active.origin)
         assertEquals("biblia-exemplo", active.theme.manifest.themeId)
         assertEquals("biblia-exemplo.tematv", themeState.lastValidPackage)
-        assertTrue(logger.messages.contains("Tema aplicado: biblia-exemplo"))
+        assertTrue(logger.messages.any { it.matches(Regex("Tema aplicado: biblia-exemplo em \\d+ ms")) })
     }
 
     @Test

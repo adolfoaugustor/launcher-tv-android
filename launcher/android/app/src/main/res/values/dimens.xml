@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Moldura de referência 260×340 px na TV 1080p de densidade 320 (D-04). -->
+    <dimen name="tile_width">130dp</dimen>
+    <dimen name="tile_height">170dp</dimen>
+    <dimen name="tile_margin_horizontal">12dp</dimen>
+    <dimen name="tile_margin_vertical">8dp</dimen>
+    <!-- 5 colunas × (130 + 2 × 12) dp -->
+    <dimen name="grid_width">770dp</dimen>
+    <dimen name="screen_padding_horizontal">32dp</dimen>
+    <dimen name="header_height">64dp</dimen>
+    <!-- 3 linhas de versículo a 14sp (28 px na TV, mínimo de legibilidade) -->
+    <dimen name="verse_height">56dp</dimen>
+</resources>

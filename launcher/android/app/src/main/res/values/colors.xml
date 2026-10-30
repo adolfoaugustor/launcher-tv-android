@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Cores do tema padrão embutido (assets/default-theme/theme.json), usadas antes do tema ativo carregar. -->
+    <color name="default_theme_background">#FFF6E0</color>
+    <color name="default_theme_text">#3B2A1A</color>
+    <color name="default_theme_accent">#E8A317</color>
+    <color name="notice_background">#DD222222</color>
+</resources>
