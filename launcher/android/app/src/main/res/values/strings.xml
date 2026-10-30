@@ -39,4 +39,15 @@
     <string name="takeover_service_warning">O tema não está abrindo sozinho. Veja em Tema.</string>
     <string name="takeover_service_steps">Para o tema abrir sozinho, ligue o serviço: Configurações › Acessibilidade › Launcher Temático › Ativar.</string>
     <string name="takeover_open_accessibility_settings">Abrir Configurações de acessibilidade</string>
+
+    <string name="activation_title">Ative esta TV</string>
+    <string name="activation_device_code_label">Código do aparelho</string>
+    <string name="activation_instruction">Peça a senha de ativação ao seu revendedor informando este código.</string>
+    <string name="activation_code_hint">Senha de 12 números</string>
+    <string name="activation_button">Ativar</string>
+    <string name="activation_wrong_code">Senha incorreta. Confira os números com o seu revendedor.</string>
+    <string name="activation_invalid_format">Digite os 12 números da senha.</string>
+    <string name="activation_locked">Muitas tentativas. Aguarde %1$d s para tentar de novo.</string>
+    <string name="diagnostics_activated">Ativada em %1$s · código %2$s</string>
+    <string name="diagnostics_not_activated">Não ativada · código %1$s</string>
 </resources>

@@ -11,6 +11,8 @@ class ThemeImportNamesTest {
         assertEquals("biblia-exemplo.tematv", ThemeImportNames.fileNameFrom(listOf("biblia-exemplo.tematv")))
         assertEquals("igreja2.tematv", ThemeImportNames.fileNameFrom(listOf("igreja2.tematv")))
         assertEquals("active_theme.txt", ThemeImportNames.fileNameFrom(listOf("active_theme.txt")))
+        assertEquals("device_code.txt", ThemeImportNames.fileNameFrom(listOf("device_code.txt")))
+        assertEquals("activation_code.txt", ThemeImportNames.fileNameFrom(listOf("activation_code.txt")))
     }
 
     @Test

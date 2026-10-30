@@ -21,7 +21,7 @@ import br.tematv.launcher.theme.ThemeOrigin
 
 /**
  * Tela "Tema": ligar e desligar a troca da tela inicial e diagnóstico (RF-06, RF-07, RF-10, RF-11, RF-13).
- * Desligar exige segurar OK por 3 s. A licença (feature 004) ainda não existe (RN-05).
+ * Desligar exige segurar OK por 3 s. O diagnóstico mostra também o estado da ativação (feature 004).
  */
 class ThemeOptionsActivity : ComponentActivity() {
 
@@ -167,7 +167,13 @@ class ThemeOptionsActivity : ComponentActivity() {
         setValue(R.id.lastTakeoverValue, takeoverPreferences.lastTakeoverAt ?: never)
         setValue(R.id.lastServiceOffValue, takeoverPreferences.lastServiceOffAt ?: never)
         setValue(R.id.lastLoopPauseValue, takeoverPreferences.lastLoopPauseAt ?: never)
-        setValue(R.id.licenseValue, getString(R.string.diagnostics_future_version))
+        val activationService = (application as TemaTvApplication).activationService
+        setValue(
+            R.id.licenseValue,
+            activationService.activatedAt?.takeIf { activationService.isActivated() }
+                ?.let { getString(R.string.diagnostics_activated, it, activationService.formattedDeviceCode) }
+                ?: getString(R.string.diagnostics_not_activated, activationService.formattedDeviceCode),
+        )
     }
 
     private fun setValue(viewId: Int, text: String) {

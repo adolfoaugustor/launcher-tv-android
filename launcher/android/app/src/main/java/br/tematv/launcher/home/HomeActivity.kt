@@ -15,7 +15,9 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.ComponentActivity
@@ -29,6 +31,7 @@ import br.tematv.launcher.R
 import br.tematv.launcher.TemaTvApplication
 import br.tematv.launcher.theme.ActiveTheme
 import br.tematv.launcher.theme.ThemeImageLoader
+import br.tematv.launcher.activation.ActivationResult
 import br.tematv.launcher.takeover.AccessibilityServiceState
 import br.tematv.launcher.takeover.HomeTakeoverService
 import br.tematv.launcher.takeover.TakeoverPreferences
@@ -57,14 +60,24 @@ class HomeActivity : ComponentActivity() {
     private lateinit var emptyGridText: TextView
     private lateinit var noticeText: TextView
     private lateinit var takeoverWarningText: TextView
+    private lateinit var activationPanel: View
+    private lateinit var deviceCodeText: TextView
+    private lateinit var activationCodeInput: EditText
+    private lateinit var activateButton: Button
+    private lateinit var activationStatusText: TextView
 
     private val themeRepository get() = (application as TemaTvApplication).themeRepository
+    private val activationService get() = (application as TemaTvApplication).activationService
     private val appsSource by lazy { InstalledAppsSource(this) }
     private val launcherPreferences by lazy { getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE) }
     private val gridAdapter = AppGridAdapter(::openApp)
     private var activeTheme: ActiveTheme? = null
     private var gridReceivedInitialFocus = false
     private val hideNotice = Runnable { noticeText.visibility = View.GONE }
+    private val endActivationLock = Runnable {
+        activateButton.isEnabled = true
+        activationStatusText.visibility = View.GONE
+    }
 
     private val packageChangeReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) = reloadApps()
@@ -89,6 +102,16 @@ class HomeActivity : ComponentActivity() {
         emptyGridText = findViewById(R.id.emptyGridText)
         noticeText = findViewById(R.id.noticeText)
         takeoverWarningText = findViewById(R.id.takeoverWarningText)
+        activationPanel = findViewById(R.id.activationPanel)
+        deviceCodeText = findViewById(R.id.deviceCodeText)
+        activationCodeInput = findViewById(R.id.activationCodeInput)
+        activateButton = findViewById(R.id.activateButton)
+        activationStatusText = findViewById(R.id.activationStatusText)
+
+        activateButton.setOnClickListener { submitActivationCode() }
+        activationCodeInput.setOnEditorActionListener { _, actionId, _ ->
+            (actionId == EditorInfo.IME_ACTION_DONE).also { if (it) submitActivationCode() }
+        }
 
         appGrid.layoutManager = GridLayoutManager(this, GRID_COLUMNS)
         appGrid.adapter = gridAdapter
@@ -135,6 +158,44 @@ class HomeActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         showTakeoverServiceWarningIfNeeded()
+        showActivationState()
+    }
+
+    /** Sem ativação, o painel de ativação ocupa o lugar da grade (RF-08 da feature 004). */
+    private fun showActivationState() {
+        val activated = activationService.isActivated()
+        activationPanel.visibility = if (activated) View.GONE else View.VISIBLE
+        appGrid.visibility = if (activated) View.VISIBLE else View.INVISIBLE
+        if (!activated) {
+            emptyGridText.visibility = View.GONE
+            deviceCodeText.text = activationService.formattedDeviceCode
+            activationCodeInput.requestFocus()
+        }
+    }
+
+    private fun submitActivationCode() {
+        when (val result = activationService.tryActivate(activationCodeInput.text.toString())) {
+            ActivationResult.Activated -> {
+                activationCodeInput.text.clear()
+                activationStatusText.visibility = View.GONE
+                showActivationState()
+                gridReceivedInitialFocus = false
+                reloadApps()
+            }
+            ActivationResult.WrongCode -> showActivationStatus(getString(R.string.activation_wrong_code))
+            ActivationResult.InvalidFormat -> showActivationStatus(getString(R.string.activation_invalid_format))
+            is ActivationResult.Locked -> {
+                showActivationStatus(getString(R.string.activation_locked, (result.remainingMs + 999) / 1000))
+                activateButton.isEnabled = false
+                activateButton.removeCallbacks(endActivationLock)
+                activateButton.postDelayed(endActivationLock, result.remainingMs)
+            }
+        }
+    }
+
+    private fun showActivationStatus(message: String) {
+        activationStatusText.text = message
+        activationStatusText.visibility = View.VISIBLE
     }
 
     /** Faixa discreta quando a troca está ligada mas o Android desligou o serviço (RF-10, D-14). */
@@ -245,6 +306,8 @@ class HomeActivity : ComponentActivity() {
 
             val entries = withContext(Dispatchers.IO) { appsSource.load() }
             gridAdapter.submit(entries)
+            // Sem ativação o painel de ativação fica no lugar da grade e com o foco.
+            if (!activationService.isActivated()) return@launch
             emptyGridText.visibility = if (entries.isEmpty()) View.VISIBLE else View.GONE
 
             if (entries.isEmpty()) {

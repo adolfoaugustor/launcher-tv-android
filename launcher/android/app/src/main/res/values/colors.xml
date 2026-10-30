@@ -5,4 +5,5 @@
     <color name="default_theme_text">#3B2A1A</color>
     <color name="default_theme_accent">#E8A317</color>
     <color name="notice_background">#DD222222</color>
+    <color name="activation_panel_background">#EEFFFFFF</color>
 </resources>

@@ -2,19 +2,130 @@
   "schema_version": 1,
   "theme_id": "biblia-exemplo",
   "display_name": "Igreja Exemplo",
-  "colors": { "background": "#FFF6E0", "text": "#3B2A1A", "accent": "#1E88E5" },
+  "colors": {
+    "background": "#FFF6E0",
+    "text": "#3B2A1A",
+    "accent": "#1E88E5"
+  },
   "background_image": "fundo.png",
   "logo_image": "logo.png",
-  "message": "Bem-vindo à Igreja Exemplo! Aqui a família aprende a Palavra de Deus.",
+  "message": "Bem-vindo à Igreja Recomaçar em Cristo! A paz do Senho Jesus...",
   "icon_frame": {
     "image": "frame-biblia.png",
-    "icon_slot": { "x": 0.18, "y": 0.20, "w": 0.64, "h": 0.42 },
-    "label_slot": { "x": 0.12, "y": 0.70, "w": 0.76, "h": 0.14 }
+    "icon_slot": {
+      "x": 0.18,
+      "y": 0.2,
+      "w": 0.64,
+      "h": 0.42
+    },
+    "label_slot": {
+      "x": 0.12,
+      "y": 0.7,
+      "w": 0.76,
+      "h": 0.14
+    }
   },
   "verses": [
-    { "reference": "Mt 19:14", "text": "Texto provisório: Jesus chama as crianças para perto dele.", "version": "PROV" },
-    { "reference": "Sl 23:1", "text": "Texto provisório: o Senhor é o meu pastor e cuida de mim.", "version": "PROV" },
-    { "reference": "Pv 3:5", "text": "Texto provisório: confie no Senhor de todo o coração.", "version": "PROV" }
+    {
+      "reference": "Gênesis 1:1",
+      "text": "No princípio Deus criou os céus e a terra.",
+      "version": "NVI"
+    },
+    {
+      "reference": "Josué 1:9",
+      "text": "Não fui eu que lhe ordenei? Seja forte e corajoso! Não se apavore, nem desanime, pois o Senhor, o seu Deus, estará com você por onde você andar.",
+      "version": "NVI"
+    },
+    {
+      "reference": "Salmos 23:1",
+      "text": "O Senhor é o meu pastor; de nada terei falta.",
+      "version": "NVI"
+    },
+    {
+      "reference": "Salmos 46:1",
+      "text": "Deus é o nosso refúgio e a nossa fortaleza, auxílio sempre presente na adversidade.",
+      "version": "NVI"
+    },
+    {
+      "reference": "Salmos 118:24",
+      "text": "Este é o dia em que o Senhor agiu; alegremo-nos e exultemos neste dia.",
+      "version": "NVI"
+    },
+    {
+      "reference": "Salmos 119:105",
+      "text": "A tua palavra é lâmpada que ilumina os meus passos e luz que clareia o meu caminho.",
+      "version": "NVI"
+    },
+    {
+      "reference": "Provérbios 3:5",
+      "text": "Confie no Senhor de todo o seu coração e não se apóie em seu próprio entendimento.",
+      "version": "NVI"
+    },
+    {
+      "reference": "Isaías 40:31",
+      "text": "Mas aqueles que esperam no Senhor renovam as suas forças. Voam alto como águias; correm e não ficam exaustos, andam e não se cansam.",
+      "version": "NVI"
+    },
+    {
+      "reference": "Isaías 41:10",
+      "text": "Por isso não tema, pois estou com você; não tenha medo, pois sou o seu Deus. Eu o fortalecerei e o ajudarei; eu o segurarei com a minha mão direita vitoriosa.",
+      "version": "NVI"
+    },
+    {
+      "reference": "Jeremias 29:11",
+      "text": "Porque sou eu que conheço os planos que tenho para vocês, diz o Senhor, planos de fazê-los prosperar e não de lhes causar dano, planos de dar-lhes esperança e um futuro.",
+      "version": "NVI"
+    },
+    {
+      "reference": "Mateus 5:9",
+      "text": "Bem-aventurados os pacificadores, pois serão chamados filhos de Deus.",
+      "version": "NVI"
+    },
+    {
+      "reference": "Mateus 19:14",
+      "text": "Então disse Jesus: “Deixem vir a mim as crianças e não as impeçam; pois o Reino dos céus pertence aos que são semelhantes a elas”.",
+      "version": "NVI"
+    },
+    {
+      "reference": "Lucas 1:37",
+      "text": "Pois nada é impossível para Deus.",
+      "version": "NVI"
+    },
+    {
+      "reference": "João 3:16",
+      "text": "Porque Deus tanto amou o mundo que deu o seu Filho Unigênito, para que todo o que nele crer não pereça, mas tenha a vida eterna.",
+      "version": "NVI"
+    },
+    {
+      "reference": "João 15:12",
+      "text": "O meu mandamento é este: Amem-se uns aos outros como eu os amei.",
+      "version": "NVI"
+    },
+    {
+      "reference": "Romanos 8:28",
+      "text": "Sabemos que Deus age em todas as coisas para o bem daqueles que o amam, dos que foram chamados de acordo com o seu propósito.",
+      "version": "NVI"
+    },
+    {
+      "reference": "Efésios 6:1",
+      "text": "Filhos, obedeçam a seus pais no Senhor, pois isso é justo.",
+      "version": "NVI"
+    },
+    {
+      "reference": "Filipenses 4:13",
+      "text": "Tudo posso naquele que me fortalece.",
+      "version": "NVI"
+    },
+    {
+      "reference": "Hebreus 13:8",
+      "text": "Jesus Cristo é o mesmo, ontem, hoje e para sempre.",
+      "version": "NVI"
+    },
+    {
+      "reference": "1 João 4:19",
+      "text": "Nós amamos porque ele nos amou primeiro.",
+      "version": "NVI"
+    }
   ],
-  "verses_attribution": "Texto provisório, substituir por tradução licenciada"
+  "verses_attribution": "Bíblia Sagrada, NVI® © 1993, 2000 Biblica, Inc.® Usado com permissão."
 }

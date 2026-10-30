@@ -13,7 +13,6 @@ enum class IgnoreReason {
     TAKEOVER_DISABLED,
     SUPPRESSED_AFTER_DISABLE,
     PAUSED,
-    LICENSE_INVALID,
     RECENTLY_OPENED,
 }
 
@@ -36,16 +35,17 @@ class TakeoverPolicy(
     private val minIntervalBetweenOpensMs: Long = 1_500,
 ) {
 
-    fun decide(packageName: String?, state: TakeoverState, licenseValid: Boolean, nowElapsedMs: Long): TakeoverDecision {
+    /** A licença não entra na decisão: sem ativação, a tela aberta mostra o painel de ativação (RN-04 da feature 004). */
+    fun decide(packageName: String?, state: TakeoverState, nowElapsedMs: Long): TakeoverDecision {
         if (packageName !in launcherPackages) return TakeoverDecision.Ignore(IgnoreReason.NOT_SYSTEM_LAUNCHER)
-        return decideForSystemLauncher(state, licenseValid, nowElapsedMs)
+        return decideForSystemLauncher(state, nowElapsedMs)
     }
 
     /** Logo após o boot o launcher do sistema já está na tela, sem evento de janela (D-05). */
-    fun decideForBoot(state: TakeoverState, licenseValid: Boolean, nowElapsedMs: Long): TakeoverDecision =
-        decideForSystemLauncher(state, licenseValid, nowElapsedMs)
+    fun decideForBoot(state: TakeoverState, nowElapsedMs: Long): TakeoverDecision =
+        decideForSystemLauncher(state, nowElapsedMs)
 
-    private fun decideForSystemLauncher(state: TakeoverState, licenseValid: Boolean, nowElapsedMs: Long): TakeoverDecision {
+    private fun decideForSystemLauncher(state: TakeoverState, nowElapsedMs: Long): TakeoverDecision {
         if (!state.takeoverEnabled) return TakeoverDecision.Ignore(IgnoreReason.TAKEOVER_DISABLED)
         if (isWindowActive(state.suppressUntilElapsedMs, nowElapsedMs, SUPPRESS_AFTER_DISABLE_MS)) {
             return TakeoverDecision.Ignore(IgnoreReason.SUPPRESSED_AFTER_DISABLE)
@@ -53,7 +53,6 @@ class TakeoverPolicy(
         if (isWindowActive(state.pausedUntilElapsedMs, nowElapsedMs, LOOP_PAUSE_MS)) {
             return TakeoverDecision.Ignore(IgnoreReason.PAUSED)
         }
-        if (!licenseValid) return TakeoverDecision.Ignore(IgnoreReason.LICENSE_INVALID)
 
         val opensInWindow = state.recentOpensElapsedMs.filter { nowElapsedMs - it in 0 until loopWindowMs }
         if (opensInWindow.any { nowElapsedMs - it < minIntervalBetweenOpensMs }) {

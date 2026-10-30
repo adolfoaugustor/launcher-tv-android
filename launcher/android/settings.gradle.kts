@@ -17,4 +17,6 @@ dependencyResolutionManagement {
 rootProject.name = "tematv-launcher"
 
 include(":theme-core")
+include(":activation-core")
+include(":activation-tool")
 include(":app")

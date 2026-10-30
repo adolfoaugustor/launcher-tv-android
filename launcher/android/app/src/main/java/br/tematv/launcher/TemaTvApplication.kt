@@ -1,6 +1,7 @@
 package br.tematv.launcher
 
 import android.app.Application
+import br.tematv.launcher.activation.ActivationService
 import br.tematv.launcher.theme.AndroidThemeLogger
 import br.tematv.launcher.theme.DefaultThemeProvider
 import br.tematv.launcher.theme.SharedPreferencesThemeState
@@ -10,6 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TemaTvApplication : Application() {
 
@@ -18,11 +20,17 @@ class TemaTvApplication : Application() {
     lateinit var themeRepository: ThemeRepository
         private set
 
+    lateinit var activationService: ActivationService
+        private set
+
+    private lateinit var themeStorage: ThemeStorage
+
     override fun onCreate() {
         super.onCreate()
         // A pasta externa só existe depois que o app a pede; o ADB da instalação depende dela.
-        val themeStorage = ThemeStorage.fromContext(this)
+        themeStorage = ThemeStorage.fromContext(this)
         themeStorage.ensureThemesDir()
+        activationService = ActivationService(this)
 
         themeRepository = ThemeRepository(
             packageStore = themeStorage,
@@ -31,6 +39,15 @@ class TemaTvApplication : Application() {
             logger = AndroidThemeLogger,
             ioDispatcher = Dispatchers.IO,
         )
-        applicationScope.launch { themeRepository.reload() }
+        applicationScope.launch { reloadImports() }
+    }
+
+    /** Lê o que o ADB enviou pela importação: tema ativo e senha de ativação; publica o código do aparelho. */
+    suspend fun reloadImports() {
+        withContext(Dispatchers.IO) {
+            activationService.publishDeviceCode(themeStorage)
+            activationService.importActivationCode(themeStorage)
+        }
+        themeRepository.reload()
     }
 }

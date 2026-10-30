@@ -6,6 +6,7 @@ import android.os.SystemClock
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import br.tematv.launcher.TemaTvApplication
+import br.tematv.launcher.activation.ActivationLicenseGate
 import br.tematv.launcher.home.HomeActivity
 import java.lang.ref.WeakReference
 import java.time.Instant
@@ -18,20 +19,21 @@ import java.time.Instant
 class HomeTakeoverService : AccessibilityService() {
 
     private val policy = TakeoverPolicy()
-    private val licenseGate: LicenseGate = AlwaysValidLicenseGate
     private val recentOpensElapsedMs = ArrayDeque<Long>()
     private lateinit var preferences: TakeoverPreferences
     private lateinit var themeCover: ThemeCover
+    private lateinit var licenseGate: LicenseGate
 
     override fun onServiceConnected() {
         super.onServiceConnected()
         preferences = TakeoverPreferences(this)
         themeCover = ThemeCover(this)
+        licenseGate = ActivationLicenseGate((application as TemaTvApplication).activationService)
         connectedService = WeakReference(this)
         Log.i(LOG_TAG, "Troca da tela inicial: serviço conectado")
         val nowElapsedMs = SystemClock.elapsedRealtime()
         if (nowElapsedMs < BOOT_GRACE_MS) {
-            apply(policy.decideForBoot(currentState(nowElapsedMs), licenseGate.isLicenseValid(), nowElapsedMs), "boot")
+            apply(policy.decideForBoot(currentState(nowElapsedMs), nowElapsedMs), "boot")
         }
     }
 
@@ -39,7 +41,7 @@ class HomeTakeoverService : AccessibilityService() {
         if (event.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
         val nowElapsedMs = SystemClock.elapsedRealtime()
         val launcherPackage = event.packageName?.toString()
-        apply(policy.decide(launcherPackage, currentState(nowElapsedMs), licenseGate.isLicenseValid(), nowElapsedMs), launcherPackage)
+        apply(policy.decide(launcherPackage, currentState(nowElapsedMs), nowElapsedMs), launcherPackage)
     }
 
     override fun onInterrupt() = Unit
@@ -75,7 +77,9 @@ class HomeTakeoverService : AccessibilityService() {
             Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP,
         )
         // A capa aparece na hora; a tela temática chega depois da espera que o Android impõe após o Home (RF-14).
-        themeCover.show((application as TemaTvApplication).themeRepository.activeTheme.value)
+        // Sem ativação a tela mostra o painel de ativação: a capa fica só com a cor de fundo, sem a identidade do tema.
+        val activeTheme = (application as TemaTvApplication).themeRepository.activeTheme.value
+        themeCover.show(activeTheme.takeIf { licenseGate.isLicenseValid() })
         try {
             startActivity(intent)
             recentOpensElapsedMs.addLast(nowElapsedMs)

@@ -44,12 +44,28 @@ Teste acelerado de ciclos (a TV reinicia várias vezes):
 tools/takeover_cycle_test.sh 192.168.1.2:5555 15 15
 ```
 
+### Feature 004, ativação
+
+- Sem ativação, a tela inicial mostra o painel de ativação com o **código do aparelho** (12 números). O revendedor gera a **senha de ativação** (12 números) desse código e a pessoa digita a senha na TV. A ativação é perpétua e funciona sem internet.
+- `activation-core/`: cálculo do código e da senha (algoritmo em `_reversa_forward/004-license-activation/interfaces/senha-ativacao.md`).
+- `activation-tool/`: ferramenta do revendedor no notebook.
+
+```bash
+./gradlew :activation-tool:installDist
+activation-tool/build/install/activation-tool/bin/activation-tool gerar-segredo        # uma única vez
+activation-tool/build/install/activation-tool/bin/activation-tool senha 1234-5678-9012 --cliente "Igreja X"
+```
+
+O segredo fica em `~/.config/tematv/activation-secret`, fora do repositório, e é embutido no app na compilação (o build para se ele não existir). **Faça uma cópia de segurança desse arquivo**: sem ele não é possível ativar novas TVs com o mesmo APK. As senhas geradas ficam registradas em `~/tematv/ativacoes.csv`.
+
+Ativar pelo ADB, sem digitar: `_reversa_forward/004-license-activation/interfaces/ativacao-adb.md`.
+
 ## Compilar e testar
 
 Pré-requisitos: JDK 17 e Android SDK (plataforma 34). O Gradle 8.7 vem pelo wrapper do projeto; crie `local.properties` com `sdk.dir=<caminho do SDK>`.
 
 ```bash
-./gradlew :theme-core:test :app:testDebugUnitTest
+./gradlew :theme-core:test :activation-core:test :app:testDebugUnitTest
 ./gradlew :app:assembleDebug :app:packSampleThemes
 ```
 
@@ -73,4 +89,4 @@ Para medir a aplicação de um pacote perto do limite de 15 MB, gere `app/build/
 python3 tools/make_large_test_theme.py
 ```
 
-Os versículos do tema padrão e dos exemplos também são provisórios: troque por uma tradução com licença de uso comercial antes de distribuir.
+Versículos: o tema padrão e o exemplo bíblico trazem uma lista pronta de 20 versículos da Nova Versão Internacional (NVI), de vários livros, com a atribuição exigida pela Biblica. O texto foi copiado da BibleGateway (NVI-PT, © 1993, 2000 Biblica, Inc.). A Biblica permite citar até 500 versículos sem pedido formal, desde que com a atribuição; confirme com a Biblica antes de vender o produto em escala.

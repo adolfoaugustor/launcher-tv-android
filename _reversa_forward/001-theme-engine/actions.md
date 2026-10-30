@@ -77,6 +77,12 @@
 | T032 | Criar `ThemeImportProvider` (só uid 2000 ou 0, escrita com truncamento, leitura para conferência) e registrá-lo exportado no manifesto com a autoridade `br.tematv.launcher.themes` (contrato `interfaces/importacao-adb.md`) | T031, T005 | - | `launcher/android/app/src/main/java/br/tematv/launcher/theme/ThemeImportProvider.kt` | 🟢 | `[X]` |
 | T033 | Rodar `./gradlew :theme-core:test :app:testDebugUnitTest :app:assembleDebug :app:packSampleThemes` e corrigir até tudo passar | T032 | - | `launcher/android/` | 🟢 | `[X]` |
 
+## Emendas
+
+| ID | Descrição | Dependências | Paralelismo | Arquivo alvo | Confidência | Status |
+|----|-----------|--------------|-------------|--------------|-------------|--------|
+| E001 | Trocar os versículos provisórios do tema padrão e do exemplo bíblico por uma lista pronta de 20 versículos da NVI (Gênesis 1:1, Josué 1:9, Salmos 23:1, 46:1, 118:24, 119:105, Provérbios 3:5, Isaías 40:31, 41:10, Jeremias 29:11, Mateus 5:9, 19:14, Lucas 1:37, João 3:16, 15:12, Romanos 8:28, Efésios 6:1, Filipenses 4:13, Hebreus 13:8, 1 João 4:19), com a atribuição "Bíblia Sagrada, Nova Versão Internacional®, NVI® © 1993, 2000 Biblica, Inc.® Usado com permissão." | - | - | `launcher/android/app/src/main/assets/default-theme/theme.json` | 🟡 | `[X]` |
+
 ## Notas de execução
 
 - **Pré-requisito de ferramentas:** a partir da T003, compilar exige JDK 17, Android SDK e Gradle (`onboarding.md` §1). As ações de escrita de código podem ser feitas antes da instalação, mas T018, T029 e T030 só fecham com as ferramentas instaladas.
@@ -110,3 +116,4 @@
 |------|-----------|-------|
 | 2026-10-29 | Versão inicial gerada por `/reversa-to-do` | reversa |
 | 2026-10-30 | Fase 6 (T031 a T033) acrescentada: importação pelo ADB | reversa-coding |
+| 2026-10-30 | Emenda E001: 20 versículos da NVI no tema padrão e no exemplo bíblico (pedido do usuário; a chave da Bíblia API não pôde ser obtida) | reversa-coding |

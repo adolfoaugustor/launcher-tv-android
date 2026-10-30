@@ -3,6 +3,18 @@ plugins {
     alias(libs.plugins.kotlin.android)
 }
 
+// Segredo de ativação do revendedor (feature 004): fica fora do repositório e entra no app só na compilação.
+val activationSecretFile = providers.gradleProperty("tematv.activationSecretFile")
+    .map { file(it) }
+    .getOrElse(file("${System.getProperty("user.home")}/.config/tematv/activation-secret"))
+if (!activationSecretFile.isFile) {
+    throw GradleException(
+        "Segredo de ativação não encontrado em $activationSecretFile. Gere com: " +
+            "./gradlew :activation-tool:installDist && activation-tool/build/install/activation-tool/bin/activation-tool gerar-segredo",
+    )
+}
+val activationSecret = activationSecretFile.readText().trim()
+
 android {
     namespace = "br.tematv.launcher"
     compileSdk = 34
@@ -13,6 +25,11 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "0.1.0"
+        buildConfigField("String", "ACTIVATION_SECRET", "\"$activationSecret\"")
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     compileOptions {
@@ -49,6 +66,7 @@ tasks.register("packSampleThemes") {
 
 dependencies {
     implementation(project(":theme-core"))
+    implementation(project(":activation-core"))
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.activity.ktx)

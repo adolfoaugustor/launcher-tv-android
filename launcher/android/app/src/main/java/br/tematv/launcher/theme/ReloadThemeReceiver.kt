@@ -6,7 +6,7 @@ import android.content.Intent
 import br.tematv.launcher.TemaTvApplication
 import kotlinx.coroutines.launch
 
-/** Recarrega o tema quando recebe `br.tematv.launcher.action.RELOAD_THEME` (usado pelo ADB na instalação). */
+/** Recarrega o tema e importa a senha de ativação quando recebe `br.tematv.launcher.action.RELOAD_THEME` (usado pelo ADB). */
 class ReloadThemeReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -15,7 +15,7 @@ class ReloadThemeReceiver : BroadcastReceiver() {
         val pendingResult = goAsync()
         application.applicationScope.launch {
             try {
-                application.themeRepository.reload()
+                application.reloadImports()
             } finally {
                 pendingResult.finish()
             }

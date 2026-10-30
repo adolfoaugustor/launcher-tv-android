@@ -45,3 +45,12 @@ W001, W002, W003, W004, W005, W006, W007, W008, W009 e W010, todos em "Observaç
 - `_reversa_forward/001-theme-engine/interfaces/broadcast-reload-theme.md`
 - `_reversa_forward/001-theme-engine/interfaces/importacao-adb.md`
 - `_reversa_forward/001-theme-engine/progress.jsonl`
+
+## Atualização 2026-10-30
+
+| Artefato | Seção | Tipo de impacto | Delta |
+|----------|-------|-----------------|-------|
+| `_reversa_sdd/sdd/theme-builder.md` | `#6-requisitos-funcionais` (RF-05 a RF-08) e `#14-open-questions` (OQ-01, OQ-03) | componente-novo | A chave da Bíblia API não pôde ser obtida. O tema padrão e o exemplo bíblico passaram a trazer uma lista pronta de 20 versículos da NVI (emenda E001 da feature 001), com a atribuição "Bíblia Sagrada, Nova Versão Internacional®, NVI® © 1993, 2000 Biblica, Inc.® Usado com permissão." Até nova decisão, a ferramenta do notebook deve partir dessa lista em vez da API. |
+| `_reversa_sdd/prd.md` | `#7-dependências-externas` (BIBLIAAPI) | componente-novo | A dependência da Bíblia API não está ativa; o texto bíblico vem da lista pronta. A Biblica permite citar até 500 versículos com atribuição; confirmar antes de vender em escala. |
+
+Fonte: `_reversa_forward/001-theme-engine/actions.md` (seção Emendas, E001).
