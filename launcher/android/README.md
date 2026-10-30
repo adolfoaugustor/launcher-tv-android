@@ -56,16 +56,30 @@ activation-tool/build/install/activation-tool/bin/activation-tool gerar-segredo 
 activation-tool/build/install/activation-tool/bin/activation-tool senha 1234-5678-9012 --cliente "Igreja X"
 ```
 
-O segredo fica em `~/.config/tematv/activation-secret`, fora do repositório, e é embutido no app na compilação (o build para se ele não existir). **Faça uma cópia de segurança desse arquivo**: sem ele não é possível ativar novas TVs com o mesmo APK. As senhas geradas ficam registradas em `~/tematv/ativacoes.csv`.
+O segredo fica em `~/.config/tematv/activation-secret`, fora do repositório, e é embutido no app na compilação (a compilação do app para se ele não existir; as ferramentas do notebook compilam sem ele). **Faça uma cópia de segurança desse arquivo**: sem ele não é possível ativar novas TVs com o mesmo APK. As senhas geradas ficam registradas em `~/tematv/ativacoes.csv`.
 
 Ativar pelo ADB, sem digitar: `_reversa_forward/004-license-activation/interfaces/ativacao-adb.md`.
+
+### Feature 005, ferramenta de preparo de tema
+
+- `theme-builder/`: comando `tematv`, que abre no navegador uma página só do próprio notebook. Nela o revendedor cadastra cada cliente (igreja ou loja), envia logotipo, fundo e moldura, escolhe as cores, escreve a mensagem e os versículos (NVI) ou as mensagens da loja, confere a prévia da tela da TV e gera o pacote `.tematv`. O pacote só é salvo se passar pela mesma conferência do launcher.
+- A aba "Ativar TV" gera a senha de ativação a partir do código do aparelho, com o mesmo cálculo e o mesmo registro do `activation-tool`.
+- Projetos em `~/tematv/clientes/<identificador>/`, pacotes em `~/tematv/temas/<identificador>.tematv`.
+- A lista NVI e as molduras prontas vêm do tema padrão e de `sample-themes/`, copiadas na compilação.
+
+```bash
+tools/instalar-tematv.sh   # uma vez, e de novo a cada atualização
+tematv                     # abre a página (no WSL, no navegador do Windows)
+```
+
+Depois de gerar o pacote, a página mostra os comandos do ADB para enviá-lo à TV.
 
 ## Compilar e testar
 
 Pré-requisitos: JDK 17 e Android SDK (plataforma 34). O Gradle 8.7 vem pelo wrapper do projeto; crie `local.properties` com `sdk.dir=<caminho do SDK>`.
 
 ```bash
-./gradlew :theme-core:test :activation-core:test :app:testDebugUnitTest
+./gradlew :theme-core:test :activation-core:test :theme-builder:test :app:testDebugUnitTest
 ./gradlew :app:assembleDebug :app:packSampleThemes
 ```
 

@@ -1,9 +1,9 @@
 {
   "schema-version": 1,
-  "feature-dir": "_reversa_forward/004-license-activation",
-  "feature-id": "004",
-  "short-name": "license-activation",
-  "started-at": "2026-10-30T13:45:55-03:00",
+  "feature-dir": "_reversa_forward/005-theme-builder",
+  "feature-id": "005",
+  "short-name": "theme-builder",
+  "started-at": "2026-10-30T15:52:52-03:00",
   "current-stage": "done",
   "stages-completed": [
     "requirements",

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TemaTV</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <strong class="brand">TemaTV</strong>
+    <nav>
+      <button type="button" class="tab" data-view="clients">Clientes</button>
+      <button type="button" class="tab" data-view="activation">Ativar TV</button>
+    </nav>
+  </header>
+
+  <p id="global-error" class="banner error" hidden></p>
+
+  <main>
+    <section id="clients-view" class="view">
+      <div class="clients-header">
+        <h1>Clientes</h1>
+        <button type="button" id="new-client-button" class="primary">Novo cliente</button>
+      </div>
+      <form id="new-client-form" class="card" hidden>
+        <h2>Novo cliente</h2>
+        <fieldset class="type-choice">
+          <legend>Tipo</legend>
+          <label><input type="radio" name="type" value="igreja" checked> Igreja <small>moldura de Bíblia e versículos NVI</small></label>
+          <label><input type="radio" name="type" value="loja"> Loja <small>moldura de hambúrguer e mensagens da loja</small></label>
+        </fieldset>
+        <label>Nome do cliente
+          <input name="display_name" maxlength="60" required data-field="display_name" placeholder="Igreja Batista X">
+        </label>
+        <label>Identificador do tema
+          <input name="theme_id" maxlength="40" data-field="theme_id" placeholder="igreja-batista-x">
+          <small>Nome do pacote na TV. Não muda depois de criado.</small>
+        </label>
+        <div class="actions">
+          <button type="submit" class="primary">Criar</button>
+          <button type="button" id="cancel-new-client">Cancelar</button>
+        </div>
+      </form>
+      <ul id="client-list" class="client-list"></ul>
+      <p id="empty-clients" class="muted" hidden>Nenhum cliente ainda. Clique em "Novo cliente" para começar.</p>
+    </section>
+
+    <section id="project-view" class="view" hidden>
+      <div class="project-header">
+        <button type="button" id="back-to-clients">← Clientes</button>
+        <h1 id="project-title"></h1>
+        <span id="project-type" class="pill"></span>
+      </div>
+      <div class="project-layout">
+        <form id="project-form" class="card project-form" autocomplete="off">
+          <label>Nome do cliente
+            <input name="display_name" maxlength="60" data-field="display_name">
+          </label>
+          <div class="colors">
+            <label>Fundo <input type="color" name="background" data-field="colors.background"></label>
+            <label>Texto <input type="color" name="text" data-field="colors.text"></label>
+            <label>Destaque <input type="color" name="accent" data-field="colors.accent"></label>
+          </div>
+          <label>Mensagem <span id="message-counter" class="muted"></span>
+            <textarea name="message" maxlength="120" rows="2" data-field="message"></textarea>
+          </label>
+          <label>Logotipo (PNG até 5 MB)
+            <input type="file" name="logo" accept="image/png" data-field="logo">
+          </label>
+          <div class="inline">
+            <label>Imagem de fundo (opcional: PNG, JPEG ou WEBP)
+              <input type="file" name="fundo" accept="image/png,image/jpeg,image/webp" data-field="fundo">
+            </label>
+            <button type="button" id="remove-background" hidden>Remover fundo</button>
+          </div>
+          <label>Moldura dos ícones
+            <select name="frame" data-field="icon_frame"></select>
+          </label>
+          <div id="custom-frame" hidden>
+            <label>Imagem da moldura (PNG)
+              <input type="file" name="moldura" accept="image/png" data-field="moldura">
+            </label>
+            <p class="muted">Áreas em frações da moldura (0 a 1): x, y, largura e altura.</p>
+            <div class="slots" data-slot="icon_slot"><span>Ícone</span></div>
+            <div class="slots" data-slot="label_slot"><span>Nome</span></div>
+          </div>
+          <fieldset>
+            <legend id="verses-legend"></legend>
+            <ol id="verse-list" class="verse-list" data-field="verses"></ol>
+            <button type="button" id="add-verse">Acrescentar</button>
+          </fieldset>
+          <label>Atribuição
+            <input name="attribution" maxlength="120" data-field="verses_attribution">
+          </label>
+          <div class="actions sticky-actions">
+            <button type="button" id="save-project">Salvar</button>
+            <button type="button" id="generate-package" class="primary">Gerar pacote</button>
+            <span id="save-status" class="muted"></span>
+          </div>
+          <div id="package-result" class="result" hidden></div>
+        </form>
+        <div class="preview-column">
+          <div id="preview" class="preview" aria-label="Prévia da tela da TV"></div>
+          <p class="muted">Prévia aproximada da tela inicial em 1920×1080. A TV é a referência final.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="activation-view" class="view" hidden>
+      <h1>Ativar TV</h1>
+      <form id="activation-form" class="card narrow" autocomplete="off">
+        <p id="secret-status" class="banner" hidden></p>
+        <label>Código do aparelho (mostrado na TV)
+          <input name="device_code" inputmode="numeric" placeholder="0000-0000-0000" data-field="device_code" required>
+        </label>
+        <label>Cliente
+          <input name="customer" maxlength="80" placeholder="Igreja Batista X">
+        </label>
+        <div class="actions"><button type="submit" class="primary">Gerar senha</button></div>
+        <div id="activation-result" class="result" hidden></div>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

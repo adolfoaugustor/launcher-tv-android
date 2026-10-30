@@ -1,0 +1,52 @@
+package br.tematv.themebuilder
+
+import java.io.File
+import java.net.BindException
+import kotlin.system.exitProcess
+
+private const val FIRST_PORT = 8787
+private const val LAST_PORT = 8797
+
+fun main(args: Array<String>) {
+    val home = File(System.getProperty("user.home"))
+    val presets = Presets.load()
+    val themesDir = File(home, "tematv/temas")
+    val server = LocalServer(
+        store = ProjectStore(File(home, "tematv/clientes"), presets),
+        images = ImageProcessor(),
+        builder = PackageBuilder(themesDir, presets),
+        activation = ResellerActivation(File(home, ".config/tematv/activation-secret"), File(home, "tematv/ativacoes.csv")),
+        presets = presets,
+        themesDir = themesDir,
+    )
+    val port = (FIRST_PORT..LAST_PORT).firstOrNull { port ->
+        try {
+            server.start(port)
+            true
+        } catch (exception: BindException) {
+            false
+        }
+    }
+    if (port == null) {
+        System.err.println("As portas $FIRST_PORT a $LAST_PORT estão ocupadas. Feche outra cópia do tematv e tente de novo.")
+        exitProcess(1)
+    }
+    val url = "http://localhost:$port"
+    println("TemaTV aberto em $url (Ctrl+C para fechar)")
+    if ("--sem-navegador" !in args) openBrowser(url)
+}
+
+/** No WSL abre o navegador do Windows; fora dele, o navegador padrão do Linux (D-13). */
+private fun openBrowser(url: String) {
+    val isWsl = System.getenv("WSL_DISTRO_NAME") != null || File("/proc/sys/fs/binfmt_misc/WSLInterop").exists()
+    val command = if (isWsl) listOf("cmd.exe", "/c", "start", "", url) else listOf("xdg-open", url)
+    try {
+        ProcessBuilder(command)
+            .apply { if (isWsl) directory(File("/mnt/c").takeIf { it.isDirectory }) }
+            .redirectOutput(ProcessBuilder.Redirect.DISCARD)
+            .redirectError(ProcessBuilder.Redirect.DISCARD)
+            .start()
+    } catch (exception: java.io.IOException) {
+        println("Não consegui abrir o navegador sozinho: abra $url")
+    }
+}
