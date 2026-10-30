@@ -94,6 +94,7 @@
 | ID | Descrição | Dependências | Paralelismo | Arquivo alvo | Confidência | Status |
 |----|-----------|--------------|-------------|--------------|-------------|--------|
 | E001 | Versículo sorteado a cada abertura da tela inicial, sem repetir o anterior, no lugar do versículo do dia; versão 0.6.2 | - | - | `launcher/android/app/src/main/java/br/tematv/launcher/home/VersePicker.kt` | 🟢 | `[X]` |
+| E002 | Ícone próprio do app (livro aberto com coração, ícone adaptativo vetorial) para os menus da TV; versão 0.6.3 | - | - | `launcher/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml` | 🟢 | `[X]` |
 
 ## Histórico de alterações
 

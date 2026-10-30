@@ -223,3 +223,9 @@ Cenário: Foco volta ao último app
 O que muda: o versículo deixa de ser o "versículo do dia" (o mesmo o dia inteiro) e passa a ser sorteado cada vez que a tela inicial aparece (ligar a TV, apertar Home, voltar de um app), sem repetir o versículo anterior; RN-03 e RF-07 passam a valer assim, mantendo referência, sigla e atribuição.
 Motivo: o usuário viu na TV que o versículo não trocava e pediu que fosse aleatório, escolhendo "sorteado ao abrir".
 Arquivos previstos: `launcher/android/app/src/main/java/br/tematv/launcher/home/VerseOfTheDay.kt` (substituído por `VersePicker.kt`), `HomeActivity.kt` e o teste correspondente.
+
+### E002, 2026-10-30
+
+O que muda: o app passa a ter ícone próprio (livro aberto com coração sobre céu e colina, o mesmo desenho do banner), mostrado nos menus da TV que usam o ícone do app (Configurações › Apps, acessibilidade, recentes) no lugar do ícone genérico do Android; o banner da fileira de apps continua o mesmo.
+Motivo: o usuário pediu um ícone/imagem para o item do launcher no menu da TV.
+Arquivos previstos: `launcher/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml`, `res/drawable/ic_launcher_foreground.xml`, `res/drawable/ic_launcher_background.xml`, `AndroidManifest.xml` e `app/build.gradle.kts` (versão).

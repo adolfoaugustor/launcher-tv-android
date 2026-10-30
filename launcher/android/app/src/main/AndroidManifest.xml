@@ -20,6 +20,7 @@
         android:name=".TemaTvApplication"
         android:allowBackup="false"
         android:banner="@drawable/banner"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.TemaTv">
 

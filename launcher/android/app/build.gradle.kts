@@ -43,8 +43,8 @@ android {
         applicationId = "br.tematv.launcher"
         minSdk = 28
         targetSdk = 34
-        versionCode = 8
-        versionName = "0.6.2"
+        versionCode = 9
+        versionName = "0.6.3"
         buildConfigField("String", "ACTIVATION_SECRET", "\"$activationSecret\"")
     }
 

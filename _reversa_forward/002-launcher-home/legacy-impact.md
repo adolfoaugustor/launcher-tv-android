@@ -29,6 +29,8 @@
 | `launcher/android/app/src/main/java/br/tematv/launcher/home/VersePicker.kt` e `VersePickerTest.kt` (E001) | `:app` | regra-alterada | LOW | Sorteio do versículo; substituem `VerseOfTheDay.kt` e o teste, apagados com a confirmação do usuário |
 | `launcher/android/app/src/main/java/br/tematv/launcher/home/HomeActivity.kt` (E001) | `:app` | regra-alterada | LOW | Sorteia a cada `onStart` e mantém o versículo enquanto a tela está na frente; sai o receptor de troca de data |
 | `launcher/android/app/build.gradle.kts` (E001) | `:app` | regra-alterada | LOW | Versão 8 / 0.6.2 para a TV receber a mudança |
+| `launcher/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml`, `res/drawable/ic_launcher_foreground.xml`, `res/drawable/ic_launcher_background.xml` (E002) | `:app` | componente-novo | LOW | Ícone adaptativo vetorial do app |
+| `launcher/android/app/src/main/AndroidManifest.xml` e `app/build.gradle.kts` (E002) | `:app` | regra-alterada | LOW | `android:icon` declarado; versão 9 / 0.6.3 |
 
 ## Diff conceitual por componente
 
